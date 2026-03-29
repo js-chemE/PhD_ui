@@ -1,0 +1,16 @@
+{
+  "H2": ["H2", "Hydrogen"],
+  "CO": ["CO", "Carbon Monoxide"],
+  "MeOH": ["MeOH", "Methanol"],
+  "MF": ["MF", "Methyl Formate"],
+  "CO2": ["CO2", "Carbon Dioxide"],
+  "DME": ["DME", "Dimethyl Ether"],
+  "Ar": ["Ar", "Argon"],
+  "N2": ["N2", "Nitrogen"],
+  "CH4": ["CH4", "Methane"],
+  "EtOH": ["EtOH", "Ethanol"],
+  "C2": ["C2", "Ethane"],
+  "C2=": ["C2=", "Ethylene"],
+  "C3": ["C3", "Propane"],
+  "C3=": ["C3=", "Propylene", "Propene"]
+}
