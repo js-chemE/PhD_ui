@@ -1,4 +1,4 @@
-from ui.plotting.params_double import params_double
+from phd_ui.plotting.params_double import params_double
 
 
 params_single = params_double.copy()
