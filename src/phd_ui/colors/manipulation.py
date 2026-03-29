@@ -1,18 +1,41 @@
-
 import colorsys
+from typing import Tuple, Literal
 
-def hex_to_rgb(hex_color):
-    """Convert hex color to RGB tuple (0-1 range)."""
+import logging
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
+
+RGBInt = Tuple[int, int, int]
+RGBFloat = Tuple[float, float, float]
+Mode = Literal["int", "float"]
+
+def hex_to_rgb(hex_color: str, mode: Mode = "int") -> RGBInt | RGBFloat:
+
     hex_color = hex_color.lstrip('#')
-    return tuple(int(hex_color[i:i+2], 16) / 255.0 for i in (0, 2, 4))
+    rgb_int: RGBInt = tuple(int(hex_color[i:i+2], 16) for i in (0, 2, 4))  # type: ignore
 
-def rgb_to_hex(rgb):
-    """Convert RGB tuple (0-1 range) to hex color."""
-    return '#{:02x}{:02x}{:02x}'.format(
-        int(rgb[0] * 255),
-        int(rgb[1] * 255),
-        int(rgb[2] * 255)
-    )
+    if mode == "int":
+        return rgb_int
+    elif mode == "float":
+        return tuple(c / 255.0 for c in rgb_int)  # type: ignore
+    else:
+        logger.error(f"Invalid mode '{mode}' in hex_to_rgb")
+        raise ValueError("mode must be 'int' or 'float'")
+
+
+def rgb_to_hex(rgb: RGBInt | RGBFloat, mode: Mode = "int") -> str:
+
+    if mode == "int":
+        r, g, b = rgb  # type: ignore
+    elif mode == "float":
+        r, g, b = (int(c * 255) for c in rgb)  # type: ignore
+    else:
+        logger.error(f"Invalid mode '{mode}' in rgb_to_hex")
+        raise ValueError("mode must be 'int' or 'float'")
+
+    return f"#{r:02x}{g:02x}{b:02x}"
+
 
 def adjust_saturation_absolute(hex_color, saturation):
     """

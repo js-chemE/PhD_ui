@@ -1,6 +1,6 @@
 import colorsys
 from matplotlib.colors import LinearSegmentedColormap
-from ui.colors.manipulation import rgb_to_hex
+from phd_ui.colors.manipulation import rgb_to_hex
 import matplotlib.pyplot as plt
 from typing import Optional
 
