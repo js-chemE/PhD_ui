@@ -1,11 +1,12 @@
+from phd_ui.plotting.figsize import FIGSIZE
 
-base_width = 0.8
+BASE_WIDTH = 0.8
 
-params_double = {
+params = {
     # ----------------------------------------------------
     # figure
     # ----------------------------------------------------
-    "figure.figsize": (7, 4.5),
+    "figure.figsize": FIGSIZE["double"],
     "figure.dpi": 300,            # screen DPI (export handled by savefig)
     
 
@@ -33,7 +34,7 @@ params_double = {
     # ----------------------------------------------------
     # axes
     # ----------------------------------------------------
-    "axes.linewidth": base_width,
+    "axes.linewidth": BASE_WIDTH,
     "axes.titlesize": 9.5,   # slightly reduced → matches font metrics
     "axes.labelsize": 9,
     "axes.labelpad": 8,      # tighter, avoids wasted vertical space
@@ -53,11 +54,11 @@ params_double = {
     "xtick.minor.size": 1.5,
     "ytick.minor.size": 1.5,
 
-    "xtick.major.width": base_width,
-    "ytick.major.width": base_width,
+    "xtick.major.width": BASE_WIDTH,
+    "ytick.major.width": BASE_WIDTH,
 
-    "xtick.minor.width": base_width,
-    "ytick.minor.width": base_width,
+    "xtick.minor.width": BASE_WIDTH,
+    "ytick.minor.width": BASE_WIDTH,
 
     "xtick.major.pad": 5,
     "ytick.major.pad": 5,
