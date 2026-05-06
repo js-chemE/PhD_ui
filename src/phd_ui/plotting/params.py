@@ -1,12 +1,10 @@
-from phd_ui.plotting.figsize import FIGSIZE
-
 BASE_WIDTH = 0.8
 
-params = {
+BASE_PARAMS = {
     # ----------------------------------------------------
     # figure
     # ----------------------------------------------------
-    "figure.figsize": FIGSIZE["double"],
+    # "figure.figsize": FIGSIZE["double"], is added in core.py to allow dynamic updates via update_params_string
     "figure.dpi": 300,            # screen DPI (export handled by savefig)
     
 
@@ -60,14 +58,14 @@ params = {
     "xtick.minor.width": BASE_WIDTH,
     "ytick.minor.width": BASE_WIDTH,
 
-    "xtick.major.pad": 5,
-    "ytick.major.pad": 5,
+    "xtick.major.pad": 3,
+    "ytick.major.pad": 3,
 
-    "xtick.direction": "out",
-    "ytick.direction": "out",
+    "xtick.direction": "in",
+    "ytick.direction": "in",
 
-    "xtick.minor.visible": True,
-    "ytick.minor.visible": True,
+    #"xtick.minor.visible": True,
+    #"ytick.minor.visible": True,
 
     # ----------------------------------------------------
     # grid
