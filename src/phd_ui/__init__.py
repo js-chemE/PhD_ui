@@ -23,10 +23,12 @@ def initialize():
 
     try:
         fonts.load_fonts(FONTS_DIR)
+        logger.info(f"Successfully loaded fonts from {FONTS_DIR}")
     except Exception as e:
         logger.warning(f"Failed to load fonts from {FONTS_DIR}: {e}")
 
     try:
         plt.rcParams.update(plotting.PARAMS["single"])
+        logger.info("Successfully set plotting parameters")
     except Exception as e:
         logger.warning(f"Failed to set plotting parameters: {e}")

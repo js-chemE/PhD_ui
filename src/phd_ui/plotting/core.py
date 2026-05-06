@@ -1,24 +1,16 @@
 import matplotlib.pyplot as plt
-from phd_ui.plotting.params_double import params_double
-from phd_ui.plotting.params_single import params_single
 from matplotlib.axes import Axes
 from typing import Tuple
+from phd_ui.plotting.params import BASE_PARAMS 
+from phd_ui.plotting.figsize import get_figsizes
 import numpy as np
 
-INCH2CM = 2.54
+from matplotlib.ticker import AutoMinorLocator, MultipleLocator
 
-def cm_to_inches(cm: float | int | np.floating | np.integer | np.ndarray) -> float | int | np.floating | np.integer | np.ndarray:
-    return cm / INCH2CM
 
-def inches_to_cm(inches: float | int | np.floating | np.integer | np.ndarray) -> float | int | np.floating | np.integer | np.ndarray:
-    return inches * INCH2CM
+FIGSIZE = get_figsizes(in_metric=False)
 
-PARAMS = {
-    "double": params_double,
-    "single": params_single
-}
-
-FIGSIZE = {k : v["figure.figsize"] for k, v in PARAMS.items()}
+PARAMS = {key: {**BASE_PARAMS, "figure.figsize": FIGSIZE[key]} for key in FIGSIZE.keys()}
 
 def update_params(params: dict) -> None:
     plt.rcParams.update(params)
@@ -26,34 +18,21 @@ def update_params(params: dict) -> None:
 
 def update_params_string(params: str, **kwargs) -> None:
     params_dict = PARAMS[params]
-    for k, v in kwargs:
+    for k, v in kwargs.items():
         params_dict[k] = v
     update_params(params_dict)
 
 
-def set_locators(
-        ax : Axes,
-        auto_minor_numbers: Tuple[int | None, int | None] = (2, 2),
-        multiple_major: Tuple[float | int | None, float | int | None] = (None, None)
-        ) -> None:
-    from matplotlib.ticker import AutoMinorLocator
-    from matplotlib.ticker import MultipleLocator
-    if multiple_major[0] is not None:
-        ax.axes.xaxis.set_major_locator(MultipleLocator(multiple_major[0])) # type: ignore
-    if auto_minor_numbers[0] is not None:
-        ax.axes.xaxis.set_minor_locator(AutoMinorLocator(auto_minor_numbers[0])) # type: ignore
-    if multiple_major[1] is not None:
-        ax.axes.yaxis.set_major_locator(MultipleLocator(multiple_major[1])) # type: ignore
-    if auto_minor_numbers[1] is not None:
-        ax.axes.yaxis.set_minor_locator(AutoMinorLocator(auto_minor_numbers[1])) # type: ignore
+def set_locators(ax: plt.Axes, *, minor_x: int = 2, minor_y: int = 2, major_x: int | float | None = None, major_y: int | float | None = None):
+    if major_x is not None:
+        ax.xaxis.set_major_locator(MultipleLocator(major_x))
+    if major_y is not None:
+        ax.yaxis.set_major_locator(MultipleLocator(major_y))
+    if minor_x is not None and ax.get_xscale() == "linear":
+        ax.xaxis.set_minor_locator(AutoMinorLocator(minor_x))
+    if minor_y is not None and ax.get_yscale() == "linear":
+        ax.yaxis.set_minor_locator(AutoMinorLocator(minor_y))
     
-    #fix_right_ylabels(ax)
-
-
-# def fix_right_ylabels(ax):
-#     for label in ax.yaxis.get_ticklabels(which="both"):
-#         if label.get_position()[0] > 0:  # right side
-#             label.set_horizontalalignment("right")
 
 def fix_right_ylabels(ax: Axes) -> None:
     """
