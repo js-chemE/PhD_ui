@@ -1,5 +1,6 @@
 {
     "single": [9, 6.5],
     "double": [18, 11.5],
-    "double_small": [18, 6.5]
+    "double_single_height": [18, 6.5],
+    "double_small": [18, 4.5]
 }
