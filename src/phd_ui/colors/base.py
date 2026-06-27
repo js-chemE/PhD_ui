@@ -12,7 +12,7 @@ SPECIES_COLORS2 = {
     "EtOH": "#704214",  # Dark red
 }
 
-SPECIES_COLORS = {
+SPECIES_COLORS: dict[str, str] = {
     "Ar": "#C0C0C0",  # Light slate gray
     "N2": "#4F4F4F",  # Dark slate gray
     "CO2": "#004C99",  # Medium blue

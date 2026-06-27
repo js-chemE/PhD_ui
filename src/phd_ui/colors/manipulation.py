@@ -14,6 +14,28 @@ SaturationMode = Literal["absolute", "relative"]
 
 
 def hex_to_rgb(hex_color: str, mode: Mode = "int") -> Union[RGBInt, RGBFloat]:
+    """
+    Convert a hex color code to an RGB tuple.
+
+    Parameters
+    ----------
+    hex_color : str
+        6-digit hex color code, e.g. '#3a7bd5' (leading '#' optional).
+    mode : {'int', 'float'}, optional
+        Return integer components in [0, 255] ('int') or float
+        components in [0, 1] ('float').
+
+    Returns
+    -------
+    tuple[int, int, int] or tuple[float, float, float]
+        RGB components, typed according to `mode`.
+
+    Raises
+    ------
+    ValueError
+        If `hex_color` is not a 6-digit hex code, or if `mode` is not
+        'int' or 'float'.
+    """
     h = hex_color.lstrip("#")
     if len(h) != 6:
         raise ValueError(f"Expected 6-digit hex color, got '{hex_color}'")
@@ -30,6 +52,27 @@ def hex_to_rgb(hex_color: str, mode: Mode = "int") -> Union[RGBInt, RGBFloat]:
 
 
 def rgb_to_hex(rgb: Union[RGBInt, RGBFloat], mode: Mode = "int") -> str:
+    """
+    Convert an RGB tuple to a hex color code.
+
+    Parameters
+    ----------
+    rgb : tuple[int, int, int] or tuple[float, float, float]
+        RGB components, either integers in [0, 255] or floats in
+        [0, 1] depending on `mode`.
+    mode : {'int', 'float'}, optional
+        Whether `rgb` holds integer or float components.
+
+    Returns
+    -------
+    str
+        6-digit hex color code, e.g. '#3a7bd5'.
+
+    Raises
+    ------
+    ValueError
+        If `mode` is not 'int' or 'float'.
+    """
     if mode == "int":
         r, g, b = (int(c) for c in rgb)
     elif mode == "float":
@@ -55,7 +98,19 @@ def adjust_saturation(hex_color: str,
     value : float
         Target saturation in [0, 1] when mode='absolute',
         or a multiplicative factor when mode='relative'.
-    mode : {'absolute', 'relative'}
+    mode : {'absolute', 'relative'}, optional
+        Whether `value` is an absolute target saturation or a
+        multiplicative factor applied to the current saturation.
+
+    Returns
+    -------
+    str
+        Hex color code with the adjusted saturation.
+
+    Raises
+    ------
+    ValueError
+        If `mode` is not 'absolute' or 'relative'.
     """
     r, g, b = hex_to_rgb(hex_color, mode="float")
     h, s, v = colorsys.rgb_to_hsv(r, g, b)
@@ -76,6 +131,26 @@ def create_saturation_palette(hex_color: str,
                               sat_range: Tuple[float, float] = (0.3, 1.0)) -> list[str]:
     """
     Create a palette of colors with varying absolute saturation.
+
+    Parameters
+    ----------
+    hex_color : str
+        Hex color code (e.g., '#ff8c00').
+    n_colors : int, optional
+        Number of colors in the palette (must be >= 2).
+    sat_range : tuple[float, float], optional
+        ``(min, max)`` saturation bounds in [0, 1].
+
+    Returns
+    -------
+    list[str]
+        Hex colors with saturations linearly spaced over `sat_range`.
+
+    Raises
+    ------
+    ValueError
+        If `n_colors` is less than 2 or if `sat_range` does not satisfy
+        ``0 <= min <= max <= 1``.
     """
     if n_colors < 2:
         raise ValueError("n_colors must be >= 2")
