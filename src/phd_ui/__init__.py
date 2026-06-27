@@ -19,7 +19,19 @@ __all__ = [
 BASE_DIR = Path(__file__).resolve().parent
 FONTS_DIR = BASE_DIR / "_assets" / "fonts"
 
-def initialize():
+def initialize() -> None:
+    """
+    Initialize ``phd_ui`` for use in a script.
+
+    Registers the bundled fonts with Matplotlib's font manager and
+    applies the default ``"single"`` rcParams preset.
+
+    Notes
+    -----
+    Failures are logged as warnings rather than raised, so a missing
+    font directory or invalid rcParams will not prevent the rest of
+    the script from running.
+    """
 
     try:
         fonts.load_fonts(FONTS_DIR)

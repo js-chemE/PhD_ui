@@ -11,6 +11,24 @@ from phd_ui.colors.manipulation import rgb_to_hex
 def _finalize(colors: list[tuple[float, float, float]],
               name: str,
               as_hex: bool) -> Union[list[str], LinearSegmentedColormap]:
+    """
+    Convert a list of float RGB tuples into a colormap or hex list.
+
+    Parameters
+    ----------
+    colors : list[tuple[float, float, float]]
+        RGB colors with components in [0, 1].
+    name : str
+        Name to assign to the resulting colormap.
+    as_hex : bool
+        If True, return a list of hex colors instead of a colormap.
+
+    Returns
+    -------
+    list[str] or LinearSegmentedColormap
+        Hex colors if `as_hex` is True, otherwise a colormap built
+        from `colors`.
+    """
     if as_hex:
         return [rgb_to_hex(c, mode="float") for c in colors]
     return LinearSegmentedColormap.from_list(name, colors, N=len(colors))
@@ -36,8 +54,20 @@ def create_colormap_from_color(color: str,
     location : float
         Position in the colormap (0–1) where the original hue sits at its
         target saturation.
-    as_hex : bool
+    as_hex : bool, optional
         If True, return a list of hex colors instead of a colormap.
+
+    Returns
+    -------
+    list[str] or LinearSegmentedColormap
+        Hex colors if `as_hex` is True, otherwise a colormap.
+
+    Raises
+    ------
+    ValueError
+        If `number` is less than 2, if `min_sat`/`max_sat` do not satisfy
+        ``0 <= min_sat < max_sat <= 1``, or if `location` is outside
+        ``[0, 1]``.
     """
     if number < 2:
         raise ValueError("number must be >= 2")
@@ -74,10 +104,21 @@ def create_colormap_from_cmap(cmap: str,
         Name of a matplotlib colormap (e.g. 'viridis', 'plasma', 'berlin').
     vmin, vmax : float
         Sampling range in [0, 1].
-    number : int
+    number : int, optional
         Number of colors (must be >= 2).
-    as_hex : bool
+    as_hex : bool, optional
         If True, return a list of hex colors instead of a colormap.
+
+    Returns
+    -------
+    list[str] or LinearSegmentedColormap
+        Hex colors if `as_hex` is True, otherwise a colormap.
+
+    Raises
+    ------
+    ValueError
+        If `number` is less than 2 or if `vmin`/`vmax` do not satisfy
+        ``0 <= vmin < vmax <= 1``.
     """
     if number < 2:
         raise ValueError("number must be >= 2")
