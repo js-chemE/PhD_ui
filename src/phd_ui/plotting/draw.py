@@ -1,5 +1,7 @@
 import matplotlib.pyplot as plt
 from typing import Literal
+import numpy as np
+from matplotlib.transforms import Transform
 
 def draw_peak(
     ax: plt.Axes,
@@ -110,4 +112,158 @@ def draw_peak(
         fontsize=fontsize,
         fontstyle=fontstyle,
         fontweight=fontweight,
+    )
+
+def draw_vscale(
+    ax: plt.Axes,
+    x: float,
+    y: float,
+    value: float | None = None,
+    scale: float = 1.0,
+    transform: Transform | None = None,
+    autosize: float = 0.12,
+    fontsize: float = 7,
+    offset_x: float = 2,
+    offset_y: float = 0,
+    offset_unit: Literal["points", "pixels", "data"] = "points",
+    linecolor: str = "black",
+    ls: str = "-",
+    lw: float = 1.2,
+    fontcolor: str = "black",
+    fontstyle: str = "normal",
+    fontweight: str | int = "normal",
+    ha: Literal["left", "center", "right"] = "left",
+    va: Literal["bottom", "center", "top"] = "center",
+) -> None:
+    """
+    Draw a vertical intensity scale bar.
+
+    Parameters
+    ----------
+    x, y
+        Bottom position of the scale bar.
+
+        If transform=ax.transData:
+            x and y are data coordinates.
+
+        If transform=ax.transAxes:
+            x and y are axes coordinates.
+
+    value
+        Value represented by the scale bar.
+
+        If None:
+            A suitable value is chosen automatically.
+
+        If given:
+            The bar is labelled with this value.
+
+    scale
+        Displayed height of the scale bar **in y-data units**.
+
+        Only used when value is given.
+
+    transform
+        Coordinate system for x and y.
+    """
+
+    if transform is None:
+        transform = ax.transData
+
+    ymin, ymax = ax.get_ylim()
+    yrange = ymax - ymin
+
+    # ------------------------------------------------------------
+    # Automatic mode
+    # ------------------------------------------------------------
+
+    if value is None:
+
+        target = autosize * yrange
+
+        exponent = np.floor(np.log10(target))
+        base = target / 10**exponent
+
+        if base < 1.5:
+            value = 1 * 10**exponent
+        elif base < 3.5:
+            value = 2 * 10**exponent
+        elif base < 7.5:
+            value = 5 * 10**exponent
+        else:
+            value = 10 * 10**exponent
+
+        scale = value
+
+    # ------------------------------------------------------------
+    # Convert displayed height if anchored in axes coordinates
+    # ------------------------------------------------------------
+
+    if transform == ax.transAxes:
+        scale_plot = scale / yrange
+    else:
+        scale_plot = scale
+
+    # ------------------------------------------------------------
+    # Draw scale bar
+    # ------------------------------------------------------------
+
+    ax.plot(
+        [x, x],
+        [y, y + scale_plot],
+        transform=transform,
+        color=linecolor,
+        lw=lw,
+        ls=ls,
+        solid_capstyle="butt",
+        clip_on=False,
+    )
+
+    # ------------------------------------------------------------
+    # Convert text offsets
+    # ------------------------------------------------------------
+
+    dpi = ax.figure.dpi
+
+    if offset_unit == "points":
+
+        offset_x_pts = offset_x
+        offset_y_pts = offset_y
+
+    elif offset_unit == "pixels":
+
+        offset_x_pts = offset_x * 72 / dpi
+        offset_y_pts = offset_y * 72 / dpi
+
+    elif offset_unit == "data":
+
+        p0 = ax.transData.transform((0, 0))
+        px = ax.transData.transform((offset_x, 0))
+        py = ax.transData.transform((0, offset_y))
+
+        offset_x_pts = (px[0] - p0[0]) * 72 / dpi
+        offset_y_pts = (py[1] - p0[1]) * 72 / dpi
+
+    else:
+        raise ValueError(
+            "offset_unit must be 'points', 'pixels' or 'data'."
+        )
+
+    # ------------------------------------------------------------
+    # Draw label
+    # ------------------------------------------------------------
+
+    ax.annotate(
+        f"{value:g}",
+        xy=(x, y + scale_plot / 2),
+        xycoords=transform,
+        xytext=(offset_x_pts, offset_y_pts),
+        textcoords="offset points",
+        ha=ha,
+        va=va,
+        fontsize=fontsize,
+        color=fontcolor,
+        fontstyle=fontstyle,
+        fontweight=fontweight,
+        clip_on=False,
     )
