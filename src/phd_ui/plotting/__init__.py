@@ -2,7 +2,7 @@ from phd_ui.plotting.core import update_params, update_params_string, PARAMS, FI
 from phd_ui.plotting.conversion import INCH2CM, inches_to_cm, cm_to_inches
 from phd_ui.plotting.export import save_figure
 from phd_ui.plotting.figsize import get_figsizes, get_figsize
-from phd_ui.plotting.draw import draw_peak, draw_vscale
+from phd_ui.plotting.draw import draw_peak, draw_vscale, draw_colorbar
 
 
 __all__ = [
@@ -20,4 +20,5 @@ __all__ = [
     "get_figsize",
     "draw_peak",
     "draw_vscale",
+    "draw_colorbar",
 ]
