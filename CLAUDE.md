@@ -32,7 +32,7 @@ pytest tests/test_colors.py::test_rgb_to_hex
 ### `plotting/` — figure styling
 
 - **`params.py`** defines `BASE_PARAMS`: a flat `dict` of matplotlib rcParams (font, tick, line, legend, savefig settings). Source Sans 3 is used for body text; Source Serif 4 for math (`mathtext`).
-- **`figsize.json`** (`_assets/`) stores canonical figure widths/heights in cm: `single`, `double`, `double_single_height`, `double_small`.
+- **`figsize.json`** (`_assets/`) stores canonical figure widths/heights in cm. Two families: document presets — a full height × width matrix at 9 cm (`single_short`, `single`, `single_square`, `single_double`, `single_double_square`, `single_long`) and 18 cm (`double_short`, `double_single`, `double_single_square`, `double`, `double_square`, `double_long`) — and presentation presets (`slide_16x9`, `slide_4x3`, `slide_half`, `slide_tall`). See the README for a per-preset "when to use" guide.
 - **`core.py`** builds the `PARAMS` dict at import time: `{key: {**BASE_PARAMS, "figure.figsize": FIGSIZE[key]} for key in FIGSIZE}`. `FIGSIZE` values are the JSON sizes converted to inches. Call `update_params_string("double")` to switch presets; it accepts `**kwargs` overrides.
 - **`export.py`**: `save_figure(fig, path, name)` saves to PNG, PDF, and SVG simultaneously (all flags default to `True`).
 
