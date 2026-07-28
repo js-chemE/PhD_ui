@@ -17,9 +17,9 @@ SPECIES_COLORS: dict[str, str] = {
     "N2": "#4F4F4F",  # Dark slate gray
     "CO2": "#004C99",  # Medium blue
     "H2": "#A0A0A0",  # Dim gray
-    "MeOH": "#ff8c00", # Dark orange
+    "MeOH": "#2CA25F", # Green (the methanol product colour)
     "MF": "#3D784D",  # Forest green
-    "CO": "#4682B4",  # Steel blue
+    "CO": "#2B2B2B",  # Near-black / dark grey
     "CH4": "#B85C4F",  # Crimson
     "H2O": "#008080",  # Dodger blue,
     "DME": "#9933CC",  # Purple

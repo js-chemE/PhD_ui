@@ -62,17 +62,44 @@ Also in `core.py`:
 
 Sizes live in `figsize.json` in **centimetres**; `get_figsizes(in_metric=False)` / `get_figsize(key, in_metric=False)` return them converted to inches (what matplotlib wants). An unknown key logs a warning and falls back to matplotlib's default `(6.4, 4.8)` in.
 
-The widths assume a ~18 cm text block: 9 cm is one column of a two-column layout (or a half-width figure in a thesis), 18 cm is the full text width.
+Presets fall into two families. **Document** presets assume a ~18 cm text block: 9 cm is one column of a two-column layout (or a half-width figure in a thesis), 18 cm is the full text width. **Presentation** (`slide_*`) presets are sized to sit on a slide leaving room for a title and margins — deliberately *not* filling the slide edge to edge. Note that 16:9 and 4:3 PowerPoint slides are the **same height** (19.05 cm / 7.5″); only the width differs (33.87 vs 25.4 cm), so the slide presets mostly differ in width.
+
+**Document presets** (for papers / the thesis) form a full **height × width matrix**: every height exists at both the single (9 cm) and double (18 cm) width, and the narrow name mirrors the wide one at the same height. Pick the width from your column layout and the height from the figure's content.
+
+| Height (cm) | single — 9 cm wide | double — 18 cm wide |
+|---|---|---|
+| 4.5 | `single_short` | `double_short` |
+| 6.5 | `single` *(default)* | `double_single` |
+| 9 | `single_square` | `double_single_square` |
+| 11.5 | `single_double` | `double` |
+| 18 | `single_double_square` | `double_square` |
+| 24 | `single_long` | `double_long` |
 
 | Preset | Size (cm) | When to use |
 |---|---|---|
-| `single` | 9 × 6.5 | **Default.** One-column journal figure, or a half-width thesis figure. A single panel with one or two datasets — the workhorse. |
-| `single_square` | 9 × 9 | One-column figure where the axes should be square: parity plots, correlation plots, anything where x and y share units or a 1:1 line is drawn. |
-| `double` | 18 × 11.5 | Full text width, generous height. Best for 2 × 2 panel grids, or a single busy plot (many species, an inset, an external legend) that needs the room. |
-| `double_square` | 18 × 18 | Full width and tall: 3 × 3 grids, correlation matrices, large heatmaps. Check it still fits on a page next to its caption. |
-| `double_single_height` | 18 × 6.5 | Full width at single-figure height — the natural choice for a row of 2–3 panels (a), (b), (c) meant to be read side by side. |
-| `double_small` | 18 × 4.5 | Wide and short. Time series, on-stream (TOS) traces, spectra strips, or a stacked pair of panels sharing one x-axis. |
-| `fullpage` | 18 × 24 | A whole page: SI figure stacks, large multi-panel overviews. Not for the main text. |
+| `single_short` | 9 × 4.5 | Half-width strip: a small inset, a mini time trace or spectrum. |
+| `single` | 9 × 6.5 | **Default.** One-column journal / half-width thesis figure — the workhorse. |
+| `single_square` | 9 × 9 | Square half-width axes: parity / correlation plots, 1:1 lines. |
+| `single_double` | 9 × 11.5 | Tall half-width figure: a vertical profile or tall bar chart. |
+| `single_double_square` | 9 × 18 | Very tall half-width: a stacked-spectra column beside body text. |
+| `single_long` | 9 × 24 | Full-height half-width column: a long reaction pathway / timeline. |
+| `double` | 18 × 11.5 | Full text width; 2 × 2 panel grids or one busy plot. |
+| `double_single` | 18 × 6.5 | Full width at a single figure's height — a row of 2–3 panels (a)(b)(c). (Formerly `double_single_height`.) |
+| `double_single_square` | 18 × 9 | Full width, moderate height: wide 1 × 3 panels, a map. |
+| `double_short` | 18 × 4.5 | Full width and short: time series / on-stream (TOS) traces, spectra strips. (Formerly `double_small`.) |
+| `double_square` | 18 × 18 | Full width and tall: 3 × 3 grids, correlation matrices, heatmaps. |
+| `double_long` | 18 × 24 | Whole-page portrait figure: SI figure stacks, overviews. Documents only. (Formerly `fullpage`.) |
+
+**Presentation presets** (for slides; all 19.05 cm tall media):
+
+| Preset | Size (cm) | When to use |
+|---|---|---|
+| `slide_16x9` | 26 × 14 | Hero figure filling a 16:9 slide, with room for a title bar and side margins. |
+| `slide_4x3` | 21 × 14 | Hero figure for a 4:3 slide (narrower usable width). |
+| `slide_half` | 14.5 × 12 | One of two figures placed side by side on a 16:9 slide. |
+| `slide_tall` | 12 × 15 | A portrait figure beside a bullet list. |
+
+> A worked example that draws every preset to scale on an A4 page and on 16:9/4:3 slides — plus a multi-page PDF report and PowerPoint decks with the figures at true size — lives in [example/figsize_comparison.ipynb](example/figsize_comparison.ipynb).
 
 Rules of thumb:
 
