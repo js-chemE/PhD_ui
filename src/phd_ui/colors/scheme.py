@@ -113,18 +113,18 @@ ORANGE = ColorFamily(
 
 RED = ColorFamily(
     name="red",
-    base="#c0392b",
-    dark="#5c201a",
-    light="#d75c4f",
-    darkest="#3e0f0b",
+    base="#c05449",
+    dark="#6a302a",
+    light="#cf7d75",
+    darkest="#4f1d17",
 )
 
 AMBER = ColorFamily(
     name="amber",
-    base="#e1a72e",
-    dark="#805f1a",
-    light="#e8bc62",
-    darkest="#644609",
+    base="#cfa44b",
+    dark="#7d6128",
+    light="#dbbb7a",
+    darkest="#624915",
 )
 
 GREEN = ColorFamily(
