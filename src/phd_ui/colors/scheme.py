@@ -1,7 +1,7 @@
 """
 The PhD colour scheme.
 
-Eight hues, each in two to four tones. The tones are ordered light to
+Nine hues, each in two to four tones. The tones are ordered light to
 dark: an optional ``light``, the ``base`` that identifies the hue, a
 ``dark`` outline tone, and an optional ``darkest`` for text on a light
 background.
@@ -17,6 +17,7 @@ green      sea green
 blue       sky blue
 purple     violet
 grey       cool grey
+sand       warm sand (backgrounds, subtle notes)
 =========  ==========================================
 
 The green was not in the original drawing. It is built to match: its
@@ -28,6 +29,12 @@ Red and amber were added the same way: each keeps its own hue but its
 four tones follow the mean light/dark ladder of green, blue and purple.
 They give the two undesired species (CH4, CO) their own colours and so
 leave ``orange`` free as a general marking / annotation hue.
+
+Sand is a warm neutral for backgrounds and low-priority annotations. It
+is deliberately lighter and less saturated than grey at every tone, so
+grey stays the colour for components while sand recedes: use
+``sand.light`` as a subtle fill, ``sand.dark`` for its stroke and
+``sand.darkest`` for text.
 
 Colours are plain hex strings, so they can be handed straight to
 Matplotlib or fed to :mod:`phd_ui.colors.cmaps` to build colormaps.
@@ -48,6 +55,7 @@ __all__ = [
     "BLUE",
     "PURPLE",
     "GREY",
+    "SAND",
     "INK",
     "get_family",
 ]
@@ -158,12 +166,20 @@ GREY = ColorFamily(
     darkest="#3f4245",
 )
 
+SAND = ColorFamily(
+    name="sand",
+    base="#e3dfd8",
+    dark="#aca08b",
+    light="#f4f3f1",
+    darkest="#827359",
+)
+
 #: Neutral grey for arrows, annotations and anything that should not
 #: carry a hue.
 INK = "#5e646f"
 
 SCHEME: dict[str, ColorFamily] = {
-    f.name: f for f in (PINK, ORANGE, RED, AMBER, GREEN, BLUE, PURPLE, GREY)
+    f.name: f for f in (PINK, ORANGE, RED, AMBER, GREEN, BLUE, PURPLE, GREY, SAND)
 }
 
 #: Categorical palette: one base tone per hue.
@@ -179,7 +195,7 @@ def get_family(name: str) -> ColorFamily:
     name : str
         Hue key, case-insensitive: one of ``'pink'``, ``'orange'``,
         ``'red'``, ``'amber'``, ``'green'``, ``'blue'``, ``'purple'``,
-        ``'grey'``.
+        ``'grey'``, ``'sand'``.
 
     Returns
     -------
