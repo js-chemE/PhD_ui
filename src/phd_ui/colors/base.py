@@ -12,18 +12,20 @@ also carry meaning rather than just identity:
     green         target product  MeOH  ("green methanol")
     blue          feed            CO2, H2
     purple/pink   side product    EtOH (purple), MF, DME (pink)
-    orange        undesired       CH4, CO
+    red / amber   undesired       CH4 (red, worst), CO (amber)
     ocean         water           H2O
     grey          inert           Ar, He, N2
     ============  ==============  =====================================
 
 This is a desirability gradient: cool = wanted, warm = not. The side
 products run from EtOH (purple, nearest the green target, being a valuable
-alcohol like methanol) through MF to DME (pink, nearest the undesired end),
-and CH4 is the clearest undesired, so it takes the vivid orange. Water is
-the one deliberate exception: it takes a literal **ocean blue** rather than
-a role colour, because H2O reads as blue. Species within a role are
-separated by tone (``base`` / ``dark`` / ``light`` / ``darkest``).
+alcohol like methanol) through MF to DME (pink, nearest the undesired end).
+The two undesired species get their own warm hues -- CH4 the vivid red as
+the worst, CO an amber -- which keeps the scheme's **orange free as a
+general marking / annotation colour**. Water is the one deliberate
+exception: a literal **ocean blue**, because H2O reads as blue. Species
+within a role are separated by tone (``base`` / ``dark`` / ``light`` /
+``darkest``).
 
 Because the colours are looked up from the scheme, editing a scheme hue
 moves every species of that role with it. ``SPECIES_COLORS`` keeps the
@@ -38,7 +40,6 @@ from phd_ui.colors.scheme import (
     BLUE,
     GREEN,
     GREY,
-    ORANGE,
     PINK,
     PURPLE,
     ColorFamily,
@@ -59,7 +60,7 @@ class Species:
     color : str
         Hex colour, resolved from the scheme (or a literal for water).
     role : str
-        Desirability role: one of ``'target'``, ``'feed'``, ``'other'``,
+        Desirability role: one of ``'target'``, ``'feed'``, ``'side'``,
         ``'undesired'``, ``'inert'`` or ``'water'``.
     family : str or None
         Name of the scheme hue the colour came from, or ``None`` for a
@@ -81,6 +82,12 @@ def _from(name: str, hue: ColorFamily, tone: str, role: str) -> Species:
 #: role scheme). Chosen to stay clear of the feed blues.
 OCEAN = "#0077BE"
 
+#: The two undesired species take their own warm hues so the scheme's orange
+#: stays free as a marking / annotation colour: red for CH4 (the worst),
+#: amber for CO (bad, but a carbon oxide you still track).
+RED = "#C0392B"
+AMBER = "#E1A72E"
+
 
 SPECIES: dict[str, Species] = {
     "MeOH": _from("MeOH", GREEN, "base", "target"),        # the target product
@@ -89,8 +96,8 @@ SPECIES: dict[str, Species] = {
     "EtOH": _from("EtOH", PURPLE, "base", "side"),         # side products, most
     "MF": _from("MF", PINK, "base", "side"),               #   to least desirable:
     "DME": _from("DME", PINK, "dark", "side"),             #   EtOH -> MF -> DME
-    "CH4": _from("CH4", ORANGE, "base", "undesired"),      # undesired (CH4 the main one)
-    "CO": _from("CO", ORANGE, "dark", "undesired"),
+    "CH4": Species("CH4", RED, "undesired"),               # undesired: CH4 worst (red),
+    "CO": Species("CO", AMBER, "undesired"),               #   CO amber (also a carbon oxide)
     "H2O": Species("H2O", OCEAN, "water", None),           # literal ocean blue
     "Ar": _from("Ar", GREY, "base", "inert"),              # inert carriers
     "He": _from("He", GREY, "dark", "inert"),
