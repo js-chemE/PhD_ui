@@ -8,7 +8,7 @@ import numpy as np
 from matplotlib.ticker import AutoMinorLocator, MultipleLocator
 
 
-FIGSIZE = get_figsizes(in_metric=False)
+FIGSIZE = get_figsizes()  # inches, matching matplotlib's `figure.figsize`
 
 PARAMS = {key: {**BASE_PARAMS, "figure.figsize": FIGSIZE[key]} for key in FIGSIZE.keys()}
 
