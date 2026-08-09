@@ -89,6 +89,7 @@ SPECIES: dict[str, Species] = {
     "H2O": Species("H2O", OCEAN, "water", None),           # literal ocean blue
     "Ar": _from("Ar", GREY, "base", "inert"),              # inert carriers
     "N2": _from("N2", GREY, "dark", "inert"),
+    "He": _from("He", GREY, "darkest", "inert"),
 }
 
 #: Canonical ``{species: hex}`` mapping (backwards-compatible shape).
