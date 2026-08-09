@@ -36,6 +36,10 @@ grey stays the colour for components while sand recedes: use
 ``sand.light`` as a subtle fill, ``sand.dark`` for its stroke and
 ``sand.darkest`` for text.
 
+``INK`` (defined below, outside ``SCHEME``) is the black for text and
+annotation: its darkest tone is a soft off-black, and a hint of warmth
+distinguishes it from the cool grey used for fills.
+
 Colours are plain hex strings, so they can be handed straight to
 Matplotlib or fed to :mod:`phd_ui.colors.cmaps` to build colormaps.
 """
@@ -174,9 +178,19 @@ SAND = ColorFamily(
     darkest="#827359",
 )
 
-#: Neutral grey for arrows, annotations and anything that should not
-#: carry a hue.
-INK = "#5e646f"
+#: The ink / "black" family: for writing and annotating only, never for
+#: fills. Its darkest tone is a soft off-black (not pure #000, which reads
+#: harsh), and a hint of warmth sets it apart from the cool, lighter
+#: ``grey`` used to fill components. Deliberately kept out of ``SCHEME`` --
+#: it is a pen, not a fillable hue. Use ``INK.darkest`` for headings,
+#: ``INK.base`` for body text, ``INK.light`` for secondary / captions.
+INK = ColorFamily(
+    name="ink",
+    base="#413b34",
+    dark="#2e2924",
+    light="#675f56",
+    darkest="#1d1a16",
+)
 
 SCHEME: dict[str, ColorFamily] = {
     f.name: f for f in (PINK, ORANGE, RED, AMBER, GREEN, BLUE, PURPLE, GREY, SAND)

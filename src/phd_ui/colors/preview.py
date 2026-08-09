@@ -147,7 +147,7 @@ def plot_species(figsize_key: str = "double") -> Figure:
 
     for row, (label, transform) in enumerate(views):
         y = len(views) - 1 - row
-        ax.text(-0.2, y + 0.45, label, ha="right", va="center", fontsize=8, color=INK)
+        ax.text(-0.2, y + 0.45, label, ha="right", va="center", fontsize=8, color=INK.base)
         for i, sp in enumerate(species):
             col = np.clip(transform(sp.color), 0.0, 1.0)
             ax.add_patch(Rectangle((i, y), 0.94, 0.9, facecolor=col, edgecolor="none"))
@@ -161,9 +161,9 @@ def plot_species(figsize_key: str = "double") -> Figure:
         if not members:
             continue
         a, b = members[0], members[-1] + 1
-        ax.plot([a, b - 0.06], [top, top], color=INK, lw=1.5)
+        ax.plot([a, b - 0.06], [top, top], color=INK.base, lw=1.5)
         ax.text((a + b) / 2, top + 0.1, role, ha="center", va="bottom",
-                fontsize=7, color=INK)
+                fontsize=7, color=INK.base)
 
     ax.set_xlim(-2.0, n)
     ax.set_ylim(0, len(views) + 0.75)
@@ -198,7 +198,7 @@ def plot_swatches(figsize_key: str = "single") -> Figure:
     for row, family in enumerate(families):
         y = len(families) - 1 - row
         ax.text(-0.15, y + 0.5, family.name, ha="right", va="center",
-                fontweight="bold", color=INK)
+                fontweight="bold", color=INK.base)
         for col, role in enumerate(_ROLES):
             color = getattr(family, role)
             if color is None:
@@ -210,7 +210,7 @@ def plot_swatches(figsize_key: str = "single") -> Figure:
 
     for col, role in enumerate(_ROLES):
         ax.text(col + 0.46, len(families) + 0.12, role, ha="center",
-                va="bottom", fontsize=7, color=INK)
+                va="bottom", fontsize=7, color=INK.base)
 
     ax.set_xlim(-1.35, len(_ROLES))
     ax.set_ylim(0, len(families) + 0.55)
@@ -264,7 +264,7 @@ def plot_ramps(figsize_key: str = "single") -> Figure:
         ax.imshow(gradient, aspect="auto", cmap=_family_cmap(family))
         ax.set_axis_off()
         ax.text(-0.01, 0.5, family.name, transform=ax.transAxes,
-                ha="right", va="center", fontsize=7, color=INK)
+                ha="right", va="center", fontsize=7, color=INK.base)
 
     fig.tight_layout()
     return fig
