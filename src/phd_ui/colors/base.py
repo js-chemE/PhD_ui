@@ -6,19 +6,24 @@ schematics and drawings. Species reuse the *same* hues, but here the hue
 encodes the species' **role on a desirability axis**, so a plot's colours
 also carry meaning rather than just identity:
 
-    ========  ==================  =====================================
-    hue       role                species
-    ========  ==================  =====================================
-    green     target product      MeOH  ("green methanol")
-    blue      feed / carbon oxide  CO2, CO, H2
-    purple    other product       DME, MF
-    warm      undesired byproduct  CH4, EtOH
-    grey      inert               Ar, N2
-    ========  ==================  =====================================
+    ============  ==============  =====================================
+    hue           role            species
+    ============  ==============  =====================================
+    green         target product  MeOH  ("green methanol")
+    blue          feed            CO2, H2
+    purple/pink   side product    EtOH (purple), MF, DME (pink)
+    orange        undesired       CH4, CO
+    ocean         water           H2O
+    grey          inert           Ar, He, N2
+    ============  ==============  =====================================
 
-Water is the one deliberate exception: it takes a literal **ocean blue**
-rather than a role colour, because H2O reads as blue. Species within a
-role are separated by tone (``base`` / ``dark`` / ``light`` / ``darkest``).
+This is a desirability gradient: cool = wanted, warm = not. The side
+products run from EtOH (purple, nearest the green target, being a valuable
+alcohol like methanol) through MF to DME (pink, nearest the undesired end),
+and CH4 is the clearest undesired, so it takes the vivid orange. Water is
+the one deliberate exception: it takes a literal **ocean blue** rather than
+a role colour, because H2O reads as blue. Species within a role are
+separated by tone (``base`` / ``dark`` / ``light`` / ``darkest``).
 
 Because the colours are looked up from the scheme, editing a scheme hue
 moves every species of that role with it. ``SPECIES_COLORS`` keeps the
@@ -79,17 +84,17 @@ OCEAN = "#0077BE"
 
 SPECIES: dict[str, Species] = {
     "MeOH": _from("MeOH", GREEN, "base", "target"),        # the target product
-    "CO2": _from("CO2", BLUE, "darkest", "feed"),          # carbon oxide / feed
-    "CO": _from("CO", BLUE, "dark", "feed"),
+    "CO2": _from("CO2", BLUE, "darkest", "feed"),          # feed
     "H2": _from("H2", BLUE, "base", "feed"),
-    "DME": _from("DME", PURPLE, "base", "other"),          # other products
-    "MF": _from("MF", PURPLE, "light", "other"),
-    "CH4": _from("CH4", PINK, "base", "undesired"),        # undesired byproducts
-    "EtOH": _from("EtOH", ORANGE, "base", "undesired"),
+    "EtOH": _from("EtOH", PURPLE, "base", "side"),         # side products, most
+    "MF": _from("MF", PINK, "base", "side"),               #   to least desirable:
+    "DME": _from("DME", PINK, "dark", "side"),             #   EtOH -> MF -> DME
+    "CH4": _from("CH4", ORANGE, "base", "undesired"),      # undesired (CH4 the main one)
+    "CO": _from("CO", ORANGE, "dark", "undesired"),
     "H2O": Species("H2O", OCEAN, "water", None),           # literal ocean blue
     "Ar": _from("Ar", GREY, "base", "inert"),              # inert carriers
-    "N2": _from("N2", GREY, "dark", "inert"),
-    "He": _from("He", GREY, "darkest", "inert"),
+    "He": _from("He", GREY, "dark", "inert"),
+    "N2": _from("N2", GREY, "darkest", "inert"),
 }
 
 #: Canonical ``{species: hex}`` mapping (backwards-compatible shape).

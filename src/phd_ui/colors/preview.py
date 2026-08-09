@@ -33,7 +33,7 @@ __all__ = ["plot_swatches", "plot_ramps", "plot_demo", "plot_species", "save_pre
 _ROLES = ("light", "base", "dark", "darkest")
 
 #: Order the species roles read in, most to least desirable-ish.
-_SPECIES_ROLE_ORDER = ("target", "feed", "other", "undesired", "water", "inert")
+_SPECIES_ROLE_ORDER = ("target", "feed", "side", "undesired", "water", "inert")
 
 #: Machado (2009) deuteranopia simulation matrix (severity 1.0), applied
 #: to linear-light RGB.
