@@ -37,11 +37,13 @@ from dataclasses import dataclass
 from typing import Optional
 
 from phd_ui.colors.scheme import (
+    AMBER,
     BLUE,
     GREEN,
     GREY,
     PINK,
     PURPLE,
+    RED,
     ColorFamily,
 )
 
@@ -82,12 +84,6 @@ def _from(name: str, hue: ColorFamily, tone: str, role: str) -> Species:
 #: role scheme). Chosen to stay clear of the feed blues.
 OCEAN = "#0077BE"
 
-#: The two undesired species take their own warm hues so the scheme's orange
-#: stays free as a marking / annotation colour: red for CH4 (the worst),
-#: amber for CO (bad, but a carbon oxide you still track).
-RED = "#C0392B"
-AMBER = "#E1A72E"
-
 
 SPECIES: dict[str, Species] = {
     "MeOH": _from("MeOH", GREEN, "base", "target"),        # the target product
@@ -96,8 +92,8 @@ SPECIES: dict[str, Species] = {
     "EtOH": _from("EtOH", PURPLE, "base", "side"),         # side products, most
     "MF": _from("MF", PINK, "base", "side"),               #   to least desirable:
     "DME": _from("DME", PINK, "dark", "side"),             #   EtOH -> MF -> DME
-    "CH4": Species("CH4", RED, "undesired"),               # undesired: CH4 worst (red),
-    "CO": Species("CO", AMBER, "undesired"),               #   CO amber (also a carbon oxide)
+    "CH4": _from("CH4", RED, "base", "undesired"),         # undesired: CH4 worst (red),
+    "CO": _from("CO", AMBER, "base", "undesired"),         #   CO amber (also a carbon oxide)
     "H2O": Species("H2O", OCEAN, "water", None),           # literal ocean blue
     "Ar": _from("Ar", GREY, "base", "inert"),              # inert carriers
     "He": _from("He", GREY, "dark", "inert"),

@@ -1,5 +1,6 @@
 from phd_ui.colors.base import SPECIES, SPECIES_COLORS, SPECIES_ROLES, Species
 from phd_ui.colors.scheme import (
+    AMBER,
     BLUE,
     GREEN,
     GREY,
@@ -7,6 +8,7 @@ from phd_ui.colors.scheme import (
     ORANGE,
     PINK,
     PURPLE,
+    RED,
     SCHEME,
     SCHEME_COLORS,
     ColorFamily,
@@ -26,6 +28,8 @@ __all__ = [
     "SCHEME_COLORS",
     "PINK",
     "ORANGE",
+    "RED",
+    "AMBER",
     "GREEN",
     "BLUE",
     "PURPLE",

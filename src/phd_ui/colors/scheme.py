@@ -1,7 +1,7 @@
 """
 The PhD colour scheme.
 
-Five hues, each in two to four tones. The tones are ordered light to
+Eight hues, each in two to four tones. The tones are ordered light to
 dark: an optional ``light``, the ``base`` that identifies the hue, a
 ``dark`` outline tone, and an optional ``darkest`` for text on a light
 background.
@@ -11,6 +11,8 @@ key        hue
 =========  ==========================================
 pink       raspberry
 orange     burnt orange
+red        signal red
+amber      amber
 green      sea green
 blue       sky blue
 purple     violet
@@ -21,6 +23,11 @@ The green was not in the original drawing. It is built to match: its
 hue (150°) sits in the wide gap between orange and blue, its saturation
 (0.40–0.52) between purple's muted and orange's vivid, and its four
 tones track blue's relative luminances to within 0.02.
+
+Red and amber were added the same way: each keeps its own hue but its
+four tones follow the mean light/dark ladder of green, blue and purple.
+They give the two undesired species (CH4, CO) their own colours and so
+leave ``orange`` free as a general marking / annotation hue.
 
 Colours are plain hex strings, so they can be handed straight to
 Matplotlib or fed to :mod:`phd_ui.colors.cmaps` to build colormaps.
@@ -35,6 +42,8 @@ __all__ = [
     "SCHEME_COLORS",
     "PINK",
     "ORANGE",
+    "RED",
+    "AMBER",
     "GREEN",
     "BLUE",
     "PURPLE",
@@ -102,6 +111,22 @@ ORANGE = ColorFamily(
     dark="#903d1f",
 )
 
+RED = ColorFamily(
+    name="red",
+    base="#c0392b",
+    dark="#5c201a",
+    light="#d75c4f",
+    darkest="#3e0f0b",
+)
+
+AMBER = ColorFamily(
+    name="amber",
+    base="#e1a72e",
+    dark="#805f1a",
+    light="#e8bc62",
+    darkest="#644609",
+)
+
 GREEN = ColorFamily(
     name="green",
     base="#42a975",
@@ -138,7 +163,7 @@ GREY = ColorFamily(
 INK = "#5e646f"
 
 SCHEME: dict[str, ColorFamily] = {
-    f.name: f for f in (PINK, ORANGE, GREEN, BLUE, PURPLE, GREY)
+    f.name: f for f in (PINK, ORANGE, RED, AMBER, GREEN, BLUE, PURPLE, GREY)
 }
 
 #: Categorical palette: one base tone per hue.
@@ -153,7 +178,8 @@ def get_family(name: str) -> ColorFamily:
     ----------
     name : str
         Hue key, case-insensitive: one of ``'pink'``, ``'orange'``,
-        ``'green'``, ``'blue'``, ``'purple'``, ``'grey'``.
+        ``'red'``, ``'amber'``, ``'green'``, ``'blue'``, ``'purple'``,
+        ``'grey'``.
 
     Returns
     -------
