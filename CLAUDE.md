@@ -2,6 +2,64 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Knowledge vault (Obsidian): read this before asking
+
+Julius keeps his PhD knowledge notes in an Obsidian vault at
+
+`C:\Users\jsommer1\Documents\MyPhD\`
+
+It sits outside every code repo and holds the context the code does not record:
+background, decisions, literature notes, project and programme structure. When a
+question is about *why* rather than *how the code works*, look there first. The
+link is two-way: the vault's own header block lists `C:\Users\jsommer1\CODE` and
+all four packages, so it expects you to come back here for the code.
+
+**Entry points, in order.** The vault root has its own `CLAUDE.md` (it has to
+live at root level), which does nothing but forward to `me.md`. `me.md` is the
+briefing: who Julius is, how he wants to be worked with, and how the vault is
+laid out. `me.md`, `Vault Map` and `Skills Map` all open with the same header
+block, so any of the three orients you.
+
+| file | what it is |
+|---|---|
+| `CLAUDE.md` | one line, points at `me.md` |
+| `me.md` | the briefing and his working preferences (start here) |
+| `000 AIOS/Maps/Vault Map.md` | folder structure and the AI tag system |
+| `000 AIOS/Maps/Skills Map.md` | index of the skills the AI can run on his behalf |
+| `Atlas.md` | topic map of the subject-matter notes |
+| `000 AIOS/History/` | where AI-written notes go |
+| `000 AIOS/Skills/<name>/` | one self-contained folder per skill: the note is the contract, the assets beside it are the implementation |
+
+**Read those core notes from disk, via the shell, every time.** `me.md` asks for
+this explicitly: never work from a cached or staged copy, and re-read
+immediately before writing, because a stale copy has already nearly clobbered
+his edits.
+
+**Vault layout** (LYT ACE, plus AIOS): `+/` inbox for new captures, `+ Vault/`
+imported sources (`+ Vault/Zotero/` named `@{first-author}.{three-word-title}.{year}`),
+`100 Notes/` timeless notes (maps, people, quotes), `200 Calendar/` days and
+reviews, `300 Efforts/` areas, projects and works, `x/` templates, attachments,
+PDFs, images, scripts, `000 AIOS/` the AI operating system itself.
+
+**Writing rules, from `me.md` and the Vault Map.** Read anything. Only *create*
+notes inside `000 AIOS/History/`, tagged `ai/monitored`. Keep AI-written and
+hand-written notes clearly separated. Whenever a note is touched beyond reading,
+set or correct its AI tag:
+
+| tag | when |
+|---|---|
+| `ai/checked` | language or consistency pass, no deeper content change |
+| `ai/assisted` | more than cosmetic: parts written, formulas changed or adjusted |
+| `ai/monitored` | AI maintains part or all of the note on a regular basis |
+
+**Link generously, but only to notes that exist.** Wikipedia rule: link the
+first meaningful mention, not every occurrence. If a link would point at a note
+that does not exist yet, flag it and let Julius decide rather than creating it
+silently.
+
+`me.md` also states general working preferences, and those are not vault-only.
+They apply to work in this repo as well, so read it rather than guessing.
+
 ## Commands
 
 ```bash
