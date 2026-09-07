@@ -11,8 +11,10 @@
     "double": [18, 11.5],
     "double_square": [18, 18],
     "double_long": [18, 24],
-    "slide_16x9": [26, 14],
-    "slide_4x3": [21, 14],
-    "slide_half": [14.5, 12],
-    "slide_tall": [12, 15]
+    "slide_short": [31, 6.5],
+    "slide": [31, 10],
+    "slide_full": [31, 14.5],
+    "slide_half": [14.5, 10],
+    "slide_square": [14.5, 14.5],
+    "slide_full_16x9": [33.87, 19.05]
 }

@@ -10,6 +10,14 @@ want centimetres (e.g. to print a size, or to compare against a template).
 The point of the table is that every figure destined for the same paper,
 thesis chapter or talk shares one width, so nothing is rescaled on import and
 font sizes stay consistent between figures.
+
+Document keys are named for the target column width (`single_*` = 9 cm,
+`double_*` = 18 cm) with the suffix setting the height. The `slide_*` keys use
+the same grammar against the slide *body box*, the area left once the title
+band and the margins are taken off a 16:9 canvas. Aspect ratio is deliberately
+not part of the naming: one canvas is assumed, and the reason a slide key
+exists at all is the 2x point size that goes with it, not the shape of the
+deck.
 """
 
 from pathlib import Path
@@ -27,7 +35,29 @@ _RENAMED_KEYS = {
     "double_single_height": "double_single",
     "double_small": "double_short",
     "fullpage": "double_long",
+    # The slide family stopped distinguishing 16:9 from 4:3 in 2026-09: both
+    # decks are the same height and only the usable width differed, so the
+    # keys now name how much of the slide the figure fills instead.
+    "slide_16x9": "slide_full",
+    "slide_4x3": "slide_full",
+    "slide_tall": "slide_square",
 }
+
+# The slide canvas, in cm: PowerPoint 16:9 (13.333 x 7.5 in). The only key that
+# uses it whole is `slide_full_16x9`.
+SLIDE_CANVAS: Tuple[float, float] = (33.87, 19.05)
+
+# What is left of that canvas once the title band and the margins are taken
+# off, and the box every other `slide_*` key is cut from:
+#
+#     width   33.87 - 2 x 1.4 side margin              = 31.0
+#     height  19.05 - 3.3 title band - 1.25 bottom     = 14.5
+#
+# The half width, `(31.0 - 2.0 gutter) / 2`, lands on 14.5 as well, so a
+# half-width figure and a square one share a width and `slide_square` is
+# genuinely square. `tests/test_figsize.py` checks that every slide key still
+# fits in here, so the assumptions above cannot drift away from the table.
+SLIDE_BODY: Tuple[float, float] = (31.0, 14.5)
 
 
 class FigsizeKeyError(KeyError):
@@ -74,8 +104,8 @@ def get_figsize(key: str, in_metric: bool = False) -> Tuple[float, float]:
     ----------
     key : str
         Table key, named for the target width: `single_*` = 9 cm (one journal
-        column), `double_*` = 18 cm (full width), `slide_*` for talks. The
-        suffix sets the height.
+        column), `double_*` = 18 cm (full width), `slide_*` cut from the slide
+        body box (`SLIDE_BODY`). The suffix sets the height.
     in_metric : bool, optional
         `False` (default) returns inches, ready for matplotlib. `True` returns
         the stored centimetres.

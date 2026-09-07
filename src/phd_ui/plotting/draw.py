@@ -368,3 +368,150 @@ def draw_colorbar(
     if label is not None:
         cbar.set_label(label)
     return cbar
+
+def draw_curve_label(
+    ax: plt.Axes,
+    x,
+    y,
+    text: str,
+    *,
+    at_fraction: float = 0.5,
+    at_x: float | None = None,
+    offset: float = 0.0,
+    line: mpl.lines.Line2D | None = None,
+    gap_pad: float = 3.0,
+    keep_inside: bool = True,
+    margin: float = 4.0,
+    **text_kwargs,
+) -> mpl.text.Text:
+    """
+    Write a label onto a curve, rotated with the curve's local slope.
+
+    A curve that carries its own name needs no legend entry, which is what
+    makes a figure readable on a slide. The rotation is measured in *display*
+    space, so the text follows what the reader sees rather than the data
+    aspect, and it stays correct for any axis scale.
+
+    Pass `line` to have the curve broken around the label, the way
+    `Axes.clabel` breaks a contour: the gap is measured from the rendered text,
+    so it fits the glyphs and not an estimate of them.
+
+    Parameters
+    ----------
+    ax : matplotlib.axes.Axes
+        Axes holding the curve.
+    x, y : array-like
+        The curve, in data coordinates. Must be the same length.
+    text : str
+        Label.
+    at_fraction : float, optional
+        Where along the curve the label sits, as a fraction of its points.
+        Default is 0.5. Ignored when `at_x` is given.
+    at_x : float, optional
+        Pin the label to this data x-coordinate instead, taking the nearest
+        point of the curve. `keep_inside` does not apply to a pinned label: a
+        pinned position is a pinned position.
+    offset : float, optional
+        Perpendicular distance from the curve, in points. Positive puts the
+        label above the curve on screen, negative below, whichever way the
+        curve is traversed. Default is 0.0, i.e. centred on the line, which
+        needs `line` to be given as well or the text sits on top of the curve.
+    line : matplotlib.lines.Line2D, optional
+        The artist drawing this curve. If given, its data is rewritten with a
+        NaN gap around the label so the line does not run through the text.
+    gap_pad : float, optional
+        Extra clearance on each side of the gap, in points. Default is 3.0.
+    keep_inside : bool, optional
+        Walk the label along the curve until its rotated bounding box clears
+        the axes by `margin` pixels. Default is True. Ignored when `at_x` is
+        given.
+    margin : float, optional
+        Clearance from the axes edges, in pixels. Default is 4.0.
+    **text_kwargs
+        Forwarded to `Axes.annotate` (``fontsize``, ``color``, ...).
+
+    Returns
+    -------
+    matplotlib.text.Text
+        The placed label.
+
+    Raises
+    ------
+    ValueError
+        If `x` and `y` differ in length, or hold fewer than two points.
+
+    Notes
+    -----
+    The axes must already be laid out when this is called, since the rotation
+    and the gap are both measured from rendered geometry: call it after
+    ``fig.canvas.draw()``, and freeze a constrained layout
+    (``fig.set_layout_engine("none")``) first if the figure has one, so that
+    adding the text cannot reflow the panel underneath it.
+    """
+    x = np.asarray(x, dtype=float)
+    y = np.asarray(y, dtype=float)
+    if x.shape != y.shape:
+        raise ValueError("x and y must have the same shape")
+    if x.size < 2:
+        raise ValueError("a curve needs at least two points")
+
+    fig = ax.figure
+    n = x.size
+    points = ax.transData.transform(np.column_stack([x, y]))
+    arclength = np.concatenate([[0.0], np.cumsum(np.hypot(*np.diff(points, axis=0).T))])
+    step = max(1, n // 40)
+
+    def place(index: int) -> tuple[float, float, float]:
+        """Anchor and rotation for the label sitting at `index`, in display units.
+
+        The tangent is flipped to always point rightwards on screen, so a curve
+        stored back-to-front (a 1/T axis, a descending wavenumber axis) gets an
+        upright label rather than an upside-down one. With the tangent upright,
+        its left-hand normal points up the screen, which is what makes a
+        positive `offset` mean "above the curve" either way round.
+        """
+        j = min(index + step, n - 1)
+        i = j - step
+        tangent = points[j] - points[i]
+        if tangent[0] < 0 or (tangent[0] == 0 and tangent[1] < 0):
+            tangent = -tangent
+        norm = np.hypot(*tangent) or 1.0
+        angle = np.degrees(np.arctan2(tangent[1], tangent[0]))
+        normal = np.array([-tangent[1], tangent[0]]) / norm
+        shift = normal * offset * fig.dpi / 72
+        return angle, shift[0], shift[1]
+
+    txt = ax.annotate(
+        text, xy=(x[0], y[0]), xytext=(0, 0), textcoords="offset pixels",
+        ha="center", va="center", rotation_mode="anchor", **text_kwargs,
+    )
+
+    if at_x is not None:
+        order = [int(np.argmin(np.abs(x - at_x)))]
+    else:
+        target = int(np.clip(round(at_fraction * (n - 1)), 0, n - 1))
+        order = sorted(range(n), key=lambda k: abs(k - target))
+        if not keep_inside:
+            order = order[:1]
+
+    fig.canvas.draw()
+    renderer = fig.canvas.get_renderer()
+
+    index = order[0]
+    for index in order:
+        angle, dx, dy = place(index)
+        txt.set_position((dx, dy))
+        txt.xy = (x[index], y[index])
+        txt.set_rotation(angle)
+        box, axes_box = txt.get_window_extent(renderer=renderer), ax.bbox
+        if (box.x0 >= axes_box.x0 + margin and box.x1 <= axes_box.x1 - margin
+                and box.y0 >= axes_box.y0 + margin and box.y1 <= axes_box.y1 - margin):
+            break
+
+    if line is not None:
+        half = 0.5 * txt.get_window_extent(renderer=renderer).width
+        half += gap_pad * fig.dpi / 72
+        gap = np.abs(arclength - arclength[index]) < half
+        line.set_data(np.where(gap, np.nan, x), np.where(gap, np.nan, y))
+
+    return txt
