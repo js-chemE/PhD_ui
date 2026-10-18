@@ -129,15 +129,39 @@ Rules of thumb:
 
 ## `colors/` — palette and colormaps
 
+The colour scheme itself is documented in [scheme.py](src/phd_ui/colors/scheme.py), with previews in [docs/colorscheme/](docs/colorscheme/). Nature's guide to designing figures, the reference the scheme's hierarchy and accessibility rules follow, is kept at [docs/natrev-artworkguide.pdf](docs/natrev-artworkguide.pdf).
+
+### [scheme.py](src/phd_ui/colors/scheme.py)
+
+Ten hues (`PINK`, `ORANGE`, `RED`, `AMBER`, `GREEN`, `BLUE`, `PURPLE`, `GREY`, `SAND`, `INK`), each a `ColorFamily` with four **fill tones** (`light`, `base`, `dark`, `darkest`) and one **line tone** (`line`). The fill tones are the drawing vocabulary; `line` is the same hue with more chroma and mid lightness, because a 1 pt stroke reads washed out in a colour that is right on a filled box. `SCHEME_LINE` is the categorical cycle built from the line tones and is what `axes.prop_cycle` carries in every preset, so an unstyled `ax.plot` already comes out in the scheme.
+
+```python
+ax.plot(x, y, color=colors.BLUE.line)                 # a line or a marker
+ax.fill_between(x, lo, hi, color=colors.BLUE.base)    # a band or a patch
+ax.text(..., color=colors.INK.base)                   # text
+```
+
 ### [base.py](src/phd_ui/colors/base.py)
 
-`SPECIES_COLORS` maps species abbreviations (`Ar`, `N2`, `CO2`, `H2`, `MeOH`, `MF`, `CO`, `CH4`, `H2O`, `DME`, `EtOH`) to their canonical hex colours. Use it everywhere so a species keeps the same colour across all figures.
+`SPECIES` maps species abbreviations (`Ar`, `N2`, `CO2`, `H2`, `MeOH`, `MF`, `CO`, `CH4`, `H2O`, `DME`, `EtOH`, `He`) to a `Species` with a `color` for traces and markers and a `fill` for drawings, both resolved from the scheme so the hue encodes the species' role (green target, CO2 dark blue and H2 light red as the two feeds, purple/pink side products, red/amber undesired, grey inert). `SPECIES_COLORS` is the `{name: hex}` of the line colours, `SPECIES_FILL_COLORS` that of the fills. Use them everywhere so a species keeps its colour across all figures.
+
+### [nature.py](src/phd_ui/colors/nature.py)
+
+`NATURE` is the Nature-branded palette (eleven families, six steps each) that Nature's art editors use for conceptual figures, grouped as `NATURE_BACKGROUND`, `NATURE_ACCENTS` and `NATURE_EXTENDED`. `nature_colors(families, step)` picks one hex per family, `nature_cmap(family)` interpolates a family into a colormap. For drawings meant to look like a Nature figure; plots use the scheme. The guide it follows is [docs/natrev-artworkguide.pdf](docs/natrev-artworkguide.pdf).
 
 ### [manipulation.py](src/phd_ui/colors/manipulation.py)
 
 - `hex_to_rgb(hex, mode="int"|"float")` / `rgb_to_hex(rgb, mode=...)` — `"int"` is 0–255, `"float"` is 0–1 (what matplotlib uses).
 - `adjust_saturation(hex, value, mode="relative"|"absolute")` — either multiply the current HSV saturation or set it outright.
 - `create_saturation_palette(hex, n_colors=5, sat_range=(0.3, 1.0))` — a series of tints of one base colour. Good for "same species, different conditions".
+
+### [wong.py](src/phd_ui/colors/wong.py)
+
+`WONG` is the colour-blind-safe palette of Wong, *Nature Methods* 8, 441 (2011), from the paper's own RGB column; the paper is at [docs/wong2011-color-blindness.pdf](docs/wong2011-color-blindness.pdf). The module docstring maps the paper's rules (vary lightness and saturation, not only hue; any colour with red and green components is suspect; replace red with magenta; soft-proof in Illustrator) onto what the scheme does about each.
+
+### [atoms.py](src/phd_ui/colors/atoms.py)
+
+The reference for drawing atoms and bonds, in figures, the IR-bands animations and Illustrator. `ATOMS` gives every element a flat `fill`, a darker `edge`, a `light` tint for an oxidised rim, a `text` colour and its covalent radius. The hues are CPK (H white, C dark grey, N blue, O red, P orange, S yellow), toned to the scheme. `BOND_STYLES` has the five bond kinds: single, double, triple, partial (dashed), and surface (dotted). The drawing helpers are `plotting.draw_atom`, `draw_bond` and `draw_molecule`, in pm on an equal-aspect axes. The reference sheet is [docs/colorscheme/colorscheme_atoms.png](docs/colorscheme/colorscheme_atoms.png).
 
 ### [cmaps.py](src/phd_ui/colors/cmaps.py)
 
@@ -151,24 +175,11 @@ Rules of thumb:
 
 `load_fonts(fonts_dir)` recursively finds every `.ttf`/`.otf` under a directory and registers it with `matplotlib.font_manager`. Raises `FileNotFoundError` if the directory is missing and `RuntimeError` if it contains no fonts. Called for you by `initialize()`.
 
-## `renaming/` — [renaming.py](src/phd_ui/renaming/renaming.py)
-
-`Renaming` is a pydantic model over a JSON file mapping a canonical name to its aliases (`{"MeOH": ["MeOH", "Methanol"], ...}`). `get_renaming(value)` accepts a `str`, `list`, or `pd.Series` and returns the canonical name(s); unknown inputs are passed through with a warning.
-
-```python
-from phd_ui.renaming.renaming import Renaming
-
-r = Renaming.from_json("src/phd_ui/_assets/renaming.json")
-r.get_renaming("Methanol")            # -> "MeOH"
-r.get_renaming(df["species"])         # -> pd.Series of canonical names
-```
-
 ## Assets — [\_assets/](src/phd_ui/_assets/)
 
 | File | Contents |
 |---|---|
 | `figsize.json` | Figure size presets, in cm |
-| `renaming.json` | Species canonical names → aliases |
 | `fonts/Source_Sans_3/` | Body/UI font |
 | `fonts/Source_Serif_4/` | Math font |
 
@@ -181,5 +192,4 @@ pytest tests/test_colors.py::test_rgb_to_hex    # a single test
 
 ## Known rough edges
 
-- `phd_ui.renaming.__init__` builds `MAIN_RENAMING` with a `filepath=` argument and an `_renaming.xlsx` path, neither of which the current `Renaming` model accepts — so importing `phd_ui.renaming` fails. Import `Renaming` from `phd_ui.renaming.renaming` and use `Renaming.from_json()` instead. (`phd_ui.initialize()` is unaffected; it does not touch this module.)
-- `numpy`, `pandas`, and `pydantic` are used but not declared in `pyproject.toml`; they currently come in transitively via matplotlib or the environment.
+- Species renaming used to live here as `phd_ui.renaming`. It was removed in 2026-10: the one implementation is `phd_parser.naming.species` (`rename_species`, `SpeciesConvention`), whose convention is a superset of the old alias file.

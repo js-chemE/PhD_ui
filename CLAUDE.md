@@ -87,6 +87,7 @@ Applies to code comments, docstrings, printed/repr output, and any figure text t
 - Capitalize only in headers/titles, proper nouns, or where otherwise grammatically correct. Axis labels, tick labels, legend entries, and other in-plot text are lowercase by default.
 - Axis labels use the format `quantity / unit` (the quantity divided by its unit), e.g. `time / s`, `temperature / K`. If the quantity is dimensionless, use an en dash "–" in place of the unit, e.g. `fraction / –`.
 - Units and exponents use power notation, not slashes: `m^2 s^-1`, `mol m^-3 s^-1`, not `m^2/s`, `mol/m^3/s`. Applies in code, plots, printed output, and LaTeX math. In Obsidian notes, `\frac{}{}` fraction style is fine in math environments; code and plots still use the power form.
+- Chemical species, formulas and reactions use the mhchem `\ce{}` package, always inside math: `$\ce{CO2}$`, `$\ce{Cu^0}$`, `$\ce{Al^3+}$`, `$\ce{CO2 + 3H2 <=> CH3OH + H2O}$`. Applies to Obsidian notes and LaTeX (thesis). Plain text stays only where math cannot render: file names/note titles, wikilinks, frontmatter, and code/plot labels (matplotlib has no mhchem).
 
 ## Plotting conventions
 
@@ -99,22 +100,43 @@ the package as `ui` read that as `ui.plotting.<fn>`.
 ### Reach for a helper before writing matplotlib by hand
 
 If `phd_ui` has a function for it, use it. Sizing, saving, tick locators,
-colours and colormaps, species colours, renaming: none of it gets reimplemented
-at the call site. The ones that come up constantly:
+colours and colormaps, species colours: none of it gets reimplemented at the
+call site. The ones that come up constantly:
 
 | instead of | use |
 |---|---|
 | `figsize=(7.1, 3.5)` | `plotting.get_figsize("double_single")` |
 | `fig.savefig(...)` twice for png + pdf | `plotting.save_figure(fig, dir_figures, name)` |
 | `ax.xaxis.set_major_locator(MultipleLocator(...))` + `AutoMinorLocator` | `plotting.set_locators(ax, minor_x=…, minor_y=…, major_x=…, major_y=…)` |
-| `"tab:blue"`, `"#1f77b4"`, `viridis`, `"0.3"` | `colors.BLUE.dark`, `colors.SPECIES["MeOH"]`, `colors.create_colormap_from_cmap(...)` |
+| `"tab:blue"`, `"#1f77b4"`, `viridis`, `"0.3"` | `colors.BLUE.line` for a line or marker, `colors.BLUE.base` for a fill, `colors.SPECIES["MeOH"].color`, `colors.create_colormap_from_cmap(...)` |
 | `ax.secondary_xaxis("top", functions=(lambda v: 1000/v - 273.15, …))` | `plotting.add_inverse_temperature_axis(ax, ticks=[…])`, or `add_reciprocal_axis` for the general case |
 | `fig.set_layout_engine("none")`, `fig.tight_layout()` | `plotting.freeze_layout(fig)` |
+| hand-drawn `Circle`s for atoms, CPK colours typed in | `plotting.draw_molecule(ax, atoms, bonds)`, colours from `colors.ATOMS` |
 | hand-rolled rotated text along a curve | `plotting.draw_curve_label(ax, x, y, text, at_x=…, offset=…)` |
 | `fig.legend(..., bbox_to_anchor=(…, …))` for a legend that does not fit inside the axes | `plotting.legend_above(fig)` |
+| small multiples whose panels must keep one physical size while the grid grows (`plt.subplots` shrinks them instead) | `plotting.panel_grid(nrows, ncols, panel_cm=3.5)`, with `merge=[(rows, cols)]` for a panel spanning several cells; or `plotting.panel_mosaic(layout)`. The width depends on content here, the one `get_figsize` exception |
 
 Get the live inventory from the package (`dir(plotting)`, `dir(colors)`) rather
 than from this table; the table is a reminder, not the list.
+
+### Line tones for lines, fill tones for fills
+
+Every scheme hue has four fill tones (`light`, `base`, `dark`, `darkest`)
+and one line tone (`line`). **A plotted line or marker takes `.line`; a
+band, patch or drawn shape takes `.base` (or another fill tone).** The
+fill tones were chosen on filled boxes in a drawing and are deliberately
+mid-chroma, which is right there and wrong on a 1 pt stroke: a thin line
+is perceived less saturated than the same colour as an area, so blue and
+amber `base` fall to 2:1 against white and read as pastel. `.line` is the
+same hue with the chroma lifted and the lightness pinned to the band line
+palettes use, see *Line tones* in `colors/scheme.py` for the numbers.
+
+`SCHEME_LINE` is the default `axes.prop_cycle` in every preset, so an
+`ax.plot` without `color=` already comes out right. Species colours follow
+the same split: `SPECIES[name].color` (and `SPECIES_COLORS`) for a trace,
+`.fill` (`SPECIES_FILL_COLORS`) for a drawing. Red, pink and orange lie
+within 41 degrees of hue, so two of them on one panel also need a line
+style or a direct label; the inert greys separate by lightness only.
 
 ### Always size figures with `get_figsize`
 
@@ -359,7 +381,7 @@ that rule.
 
 ## Architecture
 
-`phd_ui` is a Python library (Python ≥ 3.13, src-layout) that provides matplotlib styling, color utilities, and data renaming helpers for PhD research figures.
+`phd_ui` is a Python library (Python ≥ 3.13, src-layout) that provides matplotlib styling, the PhD colour scheme and species colours, and colormap helpers for PhD research figures. Species renaming is not here: it lives in `phd_parser.naming.species`.
 
 ### Entry point: `initialize()`
 
@@ -379,15 +401,14 @@ that rule.
 
 ### `colors/` — color utilities
 
-- **`base.py`**: `SPECIES_COLORS` dict maps chemical species abbreviations (H2, CO, MeOH, …) to their canonical hex colors.
+- **`scheme.py`**: the PhD colour scheme. Ten `ColorFamily` hues, each with the four fill tones `light`/`base`/`dark`/`darkest` and the line tone `line`; `SCHEME` keys them by name, `SCHEME_COLORS` lists the base tones, `SCHEME_LINE` the line tones in the cycle order that keeps adjacent entries apart under normal and colour-deficient vision (brute-forced over all orders, worst adjacent OKLab dE x100 of 17.6 normal / 9.2 simulated). `params.py` imports `SCHEME_LINE` for `axes.prop_cycle`, which is why `preview.py` imports plotting lazily inside its functions: the other way round would be a circular import.
+- **`base.py`**: `SPECIES` maps species abbreviations (H2, CO, MeOH, …) to a `Species` with `color` (line tone, for traces) and `fill` (fill tone, for drawings), both looked up from the scheme so hue encodes role. `SPECIES_COLORS` and `SPECIES_FILL_COLORS` are the flat `{name: hex}` views.
+- **`nature.py`**: `NATURE`, the Nature-branded palette (eleven six-step families: background, main accents, extended) for conceptual drawings in Nature's house style, with `nature_colors` and `nature_cmap`. The values are those of `hoanglongcao/nature-plot-style`, read off Nature's palette SVG; the guide is `docs/natrev-artworkguide.pdf`.
+- **`wong.py`**: `WONG`, the eight colours of Wong (2011, *Nature Methods*, the Okabe-Ito set), with the paper's accessibility rules mapped onto the scheme in the docstring. Paper at `docs/wong2011-color-blindness.pdf`.
+- **`atoms.py`**: `ATOMS` and `BOND_STYLES`, the one reference for drawing atoms and bonds (figures, IR-bands, Illustrator). CPK hues toned to the scheme, flat fill plus darker edge, carbon `GREY.darkest` and never black, radius = covalent radius (Cordero 2008). Ball and stick draws radii at `BALL_SCALE = 0.5` with centres at the true bond length (`bond_length_pm`), so the visible bond is about half the centre distance; 1.0 is space-filling. Symbols go inside an atom only from `LABEL_MIN_DIAMETER_MM = 4` mm at final size, never in H. IR-bands' `frontend/src/lib/elementColors.ts` copies these colours: change them here first. `plotting/molecule.py` holds `draw_atom`, `draw_bond`, `draw_molecule` (pm, equal aspect, bonds under atoms, line widths follow the preset scale).
+- **`preview.py`**: `plot_swatches`, `plot_ramps`, `plot_demo`, `plot_species`, `plot_nature`, `plot_wong`, `plot_atoms` and `save_previews`; `example/color_scheme.py` writes them into `docs/colorscheme/`.
 - **`manipulation.py`**: `hex_to_rgb` / `rgb_to_hex` (supports `"int"` and `"float"` modes), `adjust_saturation` (absolute or relative HSV saturation), `create_saturation_palette`.
 - **`cmaps.py`**: `create_colormap_from_color` (saturation ramp around a base hex color) and `create_colormap_from_cmap` (sub-sample an existing matplotlib colormap). Both return either a `LinearSegmentedColormap` or a hex list depending on `as_hex`.
-
-### `renaming/` — species alias resolution
-
-`Renaming` is a pydantic `BaseModel` that loads a JSON file mapping canonical names → list of aliases. `get_renaming(value)` accepts a `str`, `list`, or `pd.Series` and returns the canonical name. The JSON data lives in `_assets/renaming.json`.
-
-> **Note**: `renaming/__init__.py` still references a non-existent `_renaming.xlsx` via `MAIN_RENAMING`. Instantiating `MAIN_RENAMING` directly will fail; use `Renaming.from_json(path)` instead.
 
 ### `fonts/`
 
@@ -398,6 +419,5 @@ that rule.
 | File | Contents |
 |------|----------|
 | `figsize.json` | Figure size presets in cm |
-| `renaming.json` | Chemical species canonical names → aliases |
 | `fonts/Source_Sans_3/` | Body/UI font |
 | `fonts/Source_Serif_4/` | Math text font |

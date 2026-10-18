@@ -44,6 +44,10 @@ Delete those calls; constrained layout already does the job.
 
 from typing import Any, Dict
 
+from cycler import cycler
+
+from phd_ui.colors.scheme import SCHEME_LINE
+
 # Print baseline. 8 pt at 40 cm reading distance subtends the same angle as
 # 10 pt body text, and sits inside the 5-9 pt window publishers ask for.
 BASE_FONT_SIZE = 8.0
@@ -141,6 +145,8 @@ def get_params(scale: float = DEFAULT_SCALE) -> Dict[str, Any]:
         # ----------------------------------------------------
         "lines.linewidth": pt(1.2),
         "lines.markersize": pt(4),
+        # Series colours: the scheme's line tones, see phd_ui.colors.scheme.
+        "axes.prop_cycle": cycler(color=SCHEME_LINE),
 
         # ----------------------------------------------------
         # axes

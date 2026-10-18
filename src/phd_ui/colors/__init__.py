@@ -1,4 +1,4 @@
-from phd_ui.colors.base import SPECIES, SPECIES_COLORS, SPECIES_ROLES, Species
+from phd_ui.colors.base import SPECIES, SPECIES_COLORS, SPECIES_FILL_COLORS, SPECIES_ROLES, Species
 from phd_ui.colors.scheme import (
     AMBER,
     BLUE,
@@ -12,21 +12,54 @@ from phd_ui.colors.scheme import (
     SAND,
     SCHEME,
     SCHEME_COLORS,
+    SCHEME_LINE,
     ColorFamily,
     get_family,
 )
 from phd_ui.colors.manipulation import adjust_saturation, create_saturation_palette, hex_to_rgb, rgb_to_hex
 from phd_ui.colors.cmaps import create_colormap_from_color, create_colormap_from_cmap, value_to_color
-from phd_ui.colors.preview import plot_demo, plot_ramps, plot_species, plot_swatches, save_previews
+from phd_ui.colors.nature import (
+    NATURE,
+    NATURE_ACCENT_STEP,
+    NATURE_ACCENTS,
+    NATURE_BACKGROUND,
+    NATURE_EXTENDED,
+    nature_cmap,
+    nature_colors,
+)
+from phd_ui.colors.wong import WONG, WONG_COLORS
+from phd_ui.colors.atoms import (
+    ATOMS,
+    BALL_SCALE,
+    BOND_COLOR,
+    BOND_STYLES,
+    LABEL_MIN_DIAMETER_MM,
+    Atom,
+    BondStyle,
+    bond_length_pm,
+    get_atom,
+)
+from phd_ui.colors.preview import (
+    plot_atoms,
+    plot_demo,
+    plot_nature,
+    plot_ramps,
+    plot_species,
+    plot_swatches,
+    plot_wong,
+    save_previews,
+)
 
 __all__ = [
     "SPECIES",
     "SPECIES_COLORS",
+    "SPECIES_FILL_COLORS",
     "SPECIES_ROLES",
     "Species",
     "ColorFamily",
     "SCHEME",
     "SCHEME_COLORS",
+    "SCHEME_LINE",
     "PINK",
     "ORANGE",
     "RED",
@@ -38,10 +71,31 @@ __all__ = [
     "SAND",
     "INK",
     "get_family",
+    "NATURE",
+    "NATURE_ACCENT_STEP",
+    "NATURE_ACCENTS",
+    "NATURE_BACKGROUND",
+    "NATURE_EXTENDED",
+    "nature_colors",
+    "nature_cmap",
     "plot_swatches",
     "plot_ramps",
     "plot_demo",
     "plot_species",
+    "plot_nature",
+    "plot_wong",
+    "plot_atoms",
+    "WONG",
+    "WONG_COLORS",
+    "Atom",
+    "ATOMS",
+    "BALL_SCALE",
+    "BondStyle",
+    "BOND_STYLES",
+    "BOND_COLOR",
+    "LABEL_MIN_DIAMETER_MM",
+    "bond_length_pm",
+    "get_atom",
     "save_previews",
     "adjust_saturation",
     "create_saturation_palette",
