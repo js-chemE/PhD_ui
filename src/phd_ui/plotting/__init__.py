@@ -11,6 +11,7 @@ from phd_ui.plotting.figsize import (
 from phd_ui.plotting.draw import draw_peak, draw_vscale, draw_colorbar, draw_curve_label
 from phd_ui.plotting.grid import panel_grid, panel_mosaic
 from phd_ui.plotting.molecule import draw_atom, draw_bond, draw_molecule
+from phd_ui.plotting.matrix import Block, Equation, Stripe, Term, draw_matrix, draw_matrix_equation
 from phd_ui.plotting.params import BASE_PARAMS, SLIDE_SCALE, get_params, scale_for_key
 
 
@@ -47,4 +48,10 @@ __all__ = [
     "draw_atom",
     "draw_bond",
     "draw_molecule",
+    "Block",
+    "Equation",
+    "Stripe",
+    "Term",
+    "draw_matrix",
+    "draw_matrix_equation",
 ]

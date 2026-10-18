@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 from matplotlib.axes import Axes
-from typing import Any, Tuple
+from typing import Any
 from phd_ui.plotting.params import BASE_PARAMS, get_params, scale_for_key
 from phd_ui.plotting.figsize import get_figsizes
 import numpy as np
