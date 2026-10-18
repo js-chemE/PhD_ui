@@ -88,6 +88,7 @@ Applies to code comments, docstrings, printed/repr output, and any figure text t
 - Axis labels use the format `quantity / unit` (the quantity divided by its unit), e.g. `time / s`, `temperature / K`. If the quantity is dimensionless, use an en dash "–" in place of the unit, e.g. `fraction / –`.
 - Units and exponents use power notation, not slashes: `m^2 s^-1`, `mol m^-3 s^-1`, not `m^2/s`, `mol/m^3/s`. Applies in code, plots, printed output, and LaTeX math. In Obsidian notes, `\frac{}{}` fraction style is fine in math environments; code and plots still use the power form.
 - Chemical species, formulas and reactions use the mhchem `\ce{}` package, always inside math: `$\ce{CO2}$`, `$\ce{Cu^0}$`, `$\ce{Al^3+}$`, `$\ce{CO2 + 3H2 <=> CH3OH + H2O}$`. Applies to Obsidian notes and LaTeX (thesis). Plain text stays only where math cannot render: file names/note titles, wikilinks, frontmatter, and code/plot labels (matplotlib has no mhchem).
+- Fonts: two families, both open and bundled in `phd_ui`: Source Sans 3 and Source Serif 4. Source Sans 3 is used for all figure and slide text, with hierarchy by size and weight, never a second sans. Maths matches the body text it sits beside: Source Serif 4 in print figures and the thesis body, Source Sans 3 italic on slides. Words and units upright, quantities italic. Matplotlib uses mathtext, not usetex. Slides use Source Sans 3 (embedded in the pptx) instead of Segoe UI. Thesis: LuaLaTeX, Source Serif 4 body, Source Sans 3 headings and captions, unicode-math with Source Serif 4 letters over STIX Two Math symbols. Details, preamble and open to-dos: `phd_ui` CLAUDE.md, section *Typography*.
 
 ## Plotting conventions
 
@@ -222,6 +223,82 @@ If a figure genuinely needs a third scale, apply one
 (`update_params(get_params(1.5))`) rather than patching individual `fontsize=`
 arguments, which is how older notebooks ended up with a spread of 5 to 11.5 pt
 inside one project.
+
+### Typography: one sans for text, maths follows the medium
+
+Decided 2026-10-18. Two families, both bundled in `_assets/fonts/`, both
+open (OFL), designed as a pair by Adobe: **Source Sans 3** and **Source
+Serif 4**. Nothing else, in figures, slides or thesis.
+
+**General rules**
+
+1. **One sans for all figure and slide text.** Source Sans 3: labels, ticks,
+   legends, annotations, slide titles and bullets. Hierarchy comes from size
+   and weight, never from a second sans.
+2. **Maths matches the body text it sits beside.** A variable in a figure
+   looks like the same variable in the paragraph or bullet next to it. This
+   rule, not taste, picks the maths font.
+3. **At most two families per document**, one serif and one sans, from the
+   same design family.
+4. **Upright for names, italic for variables.** Words, units, species and
+   descriptive subscripts are upright (`$S_\mathrm{MeOH}$`,
+   `$E_\mathrm{a}$`, `$\mathrm{CO_2}$`); quantities are italic.
+5. **Mathtext, not `usetex`.** `text.usetex` stays off: mathtext is fast,
+   needs no TeX install, and lets the preset choose the maths font.
+
+**Per medium**
+
+| medium | text | maths | status |
+|---|---|---|---|
+| print figures (`single_*`, `double_*`) | Source Sans 3 | Source Serif 4, to match the thesis body | in params now |
+| slide figures (`slide_*`) | Source Sans 3 | Source Sans 3 italic, to match the slide text | **to do** |
+| slides (PowerPoint text) | Source Sans 3, embedded in the pptx | Cambria Math is PowerPoint's only option; put real equations in a figure instead | **to do**: replaces Segoe UI |
+| thesis body | Source Serif 4 | `unicode-math`, Latin letters, digits and Greek from Source Serif 4 | **to do**: no template yet |
+| thesis headings, captions, tables | Source Sans 3 | as body | **to do** |
+
+Why the slide maths changes: a serif $E_\mathrm{a}$ in a figure on a sans
+slide is the one place the current setup looks dated, and on a slide there
+is no serif body text for it to match. Why Segoe UI goes: it ships only
+with Windows, so on a Mac or a conference laptop it is replaced by whatever
+is there; it cannot be bundled; and the figures beside it are Source Sans 3
+anyway. Source Sans 3 looks nearly the same, so nothing jumps.
+
+**To do, in order**
+
+1. *Slide maths in params.* In `get_params`, when `scale` is the slide
+   scale, set `mathtext.rm` to `Source Sans 3`, `mathtext.it` to
+   `Source Sans 3:italic`, `mathtext.bf` to `Source Sans 3:bold`, and
+   `mathtext.fallback` to `stixsans` (symbols the text font lacks, such as
+   the integral sign, then come from a sans). The cleanest home is a
+   `math_family` argument picked by `scale_for_key`'s caller, the way the
+   point sizes are.
+2. *Slides.* Set the slide master's theme fonts (heading and body) to
+   Source Sans 3; install it from `_assets/fonts/Source_Sans_3/` on every
+   machine you present from, and tick File > Options > Save > *Embed fonts
+   in the file* (all characters) for decks that leave your laptop.
+3. *Thesis.* LuaLaTeX, with this preamble as the starting point:
+
+   ```latex
+   \usepackage{fontspec}
+   \usepackage{unicode-math}
+   \setmainfont{Source Serif 4}
+   \setsansfont{Source Sans 3}
+   % symbols from a complete maths font, letters from the body font
+   \setmathfont{STIX Two Math}
+   \setmathfont{Source Serif 4}[range=up/{latin,Latin,num}]
+   \setmathfont{Source Serif 4 Italic}[range=it/{latin,Latin,greek,Greek}]
+   \usepackage[version=4]{mhchem}  % \ce{} follows the text font
+   % headings and captions in the sans, as the figures
+   \usepackage{sectsty}\allsectionsfont{\sffamily}
+   \usepackage[font=sf]{caption}
+   ```
+
+   If the thesis ends up in classic Computer Modern instead, set the print
+   presets' `mathtext.fontset` to `cm`. The mismatch is the mistake, not
+   either font.
+
+The same rule set lives in the vault's `me.md` under *Text & Plot Style
+Conventions*; when this section changes, carry the per-medium table there.
 
 ### Never call `fig.tight_layout()` or `fig.subplots_adjust()`
 
