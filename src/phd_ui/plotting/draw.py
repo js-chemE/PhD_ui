@@ -75,6 +75,9 @@ def draw_peak(
     fontweight: str | int = "normal",
     side: Literal["left", "right"] = "left",
     rotation: float = 90,
+    label: str | None = None,
+    alpha: float | None = None,
+    zorder: float | None = None,
 ) -> None:
     """
     Draw a peak marker with aligned label.
@@ -116,14 +119,25 @@ def draw_peak(
         Side of the line on which the label is placed.
     rotation : float, optional
         Rotation angle of the label, in degrees.
+    label : str, optional
+        Text of the label. Default is the wavenumber; an empty string draws
+        the line only.
+    alpha : float, optional
+        Opacity of the line and the label. Default is opaque.
+    zorder : float, optional
+        Drawing order of the line and the label; a negative value puts them
+        behind the data. Default is matplotlib's for lines and text.
 
     Returns
     -------
     None
     """
-    ax.axvline(wavenumber_cm, color=linecolor, ls=ls, lw=lw)
+    style = {k: v for k, v in (("alpha", alpha), ("zorder", zorder)) if v is not None}
+    ax.axvline(wavenumber_cm, color=linecolor, ls=ls, lw=lw, **style)
+    if label == "":
+        return
 
-    label = f"{wavenumber_cm}"
+    label = f"{wavenumber_cm}" if label is None else label
     fig = ax.figure
 
     txt = ax.text(
@@ -164,6 +178,7 @@ def draw_peak(
         fontsize=fontsize,
         fontstyle=fontstyle,
         fontweight=fontweight,
+        **style,
     )
 
 def draw_vscale(
