@@ -173,6 +173,8 @@ The reference for drawing atoms and bonds, in figures, the IR-bands animations a
 
 ## `fonts/` — [fonts.py](src/phd_ui/fonts/fonts.py)
 
+**Typography rule.** Source Sans 3 is used for all figure and slide text. Maths follows the text it sits beside: Source Serif 4 in print figures, to match a Source Serif 4 thesis body, and Source Sans 3 italic on slides. Segoe UI is retired for slides. The full guideline, with the thesis preamble and the open to-dos, is in [CLAUDE.md](CLAUDE.md), under *Typography: one sans for text, maths follows the medium*. Page 10 of [docs/mock_report.pdf](docs/mock_report.pdf) shows the fonts at true size.
+
 `load_fonts(fonts_dir)` recursively finds every `.ttf`/`.otf` under a directory and registers it with `matplotlib.font_manager`. Raises `FileNotFoundError` if the directory is missing and `RuntimeError` if it contains no fonts. Called for you by `initialize()`.
 
 ## Assets — [\_assets/](src/phd_ui/_assets/)
