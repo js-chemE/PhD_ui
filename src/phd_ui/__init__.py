@@ -1,6 +1,7 @@
 import phd_ui.fonts as fonts
 import phd_ui.plotting as plotting
 import phd_ui.colors as colors
+import phd_ui.text as text
 
 import matplotlib.pyplot as plt
 from pathlib import Path
@@ -13,7 +14,8 @@ logger.setLevel(logging.INFO)
 __all__ = [
     "fonts",
     "plotting",
-    "colors"
+    "colors",
+    "text",
 ]
 
 BASE_DIR = Path(__file__).resolve().parent
