@@ -1,0 +1,16 @@
+formate HCOO on Cu(111), bidentate bridging, upright (C2v), A; C-O 1.270, C-H 1.108, Cu-O 2.017, Cu-Cu 2.546 from Chutia et al., Surf. Sci. 2016, 653, 45 (PBE, Table 1); O-C-O 128 deg ASSUMED, not in that source; Cu atoms are the two binding surface atoms
+  phd_ui
+
+  6  5  0  0  0  0  0  0  0  0999 V2000
+    0.0000    0.0000    2.5694 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -1.1415    0.0000    2.0127 O   0  0  0  0  0  0  0  0  0  0  0  0
+    1.1415    0.0000    2.0127 O   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0000    0.0000    3.6774 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -1.2730    0.0000    0.0000 Cu  0  0  0  0  0  0  0  0  0  0  0  0
+    1.2730    0.0000    0.0000 Cu  0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  4  0
+  1  3  4  0
+  1  4  1  0
+  2  5  8  0
+  3  6  8  0
+M  END

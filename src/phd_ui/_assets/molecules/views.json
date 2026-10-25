@@ -1,0 +1,125 @@
+{
+ "methanol": {
+  "organic": {
+   "plane": [
+    "C1",
+    "O2",
+    "H6"
+   ],
+   "skeletal": true
+  },
+  "flat": {
+   "plane": [
+    "C1",
+    "O2",
+    "H6"
+   ],
+   "rotate": 90
+  },
+  "upright": {
+   "plane": [
+    "C1",
+    "O2",
+    "H6"
+   ],
+   "rotate": 90,
+   "turn": -30,
+   "tip": -20
+  }
+ },
+ "methane": {
+  "organic": {
+   "plane": [
+    "C1",
+    "H2",
+    "H3"
+   ],
+   "rotate": 90,
+   "skeletal": true
+  },
+  "upright": {
+   "plane": [
+    "C1",
+    "H2",
+    "H3"
+   ],
+   "rotate": 90,
+   "turn": 100,
+   "tip": 25
+  }
+ },
+ "formaldehyde": {
+  "flat": {
+   "plane": [
+    "C2",
+    "O1",
+    "H3"
+   ],
+   "rotate": 90
+  },
+  "upright": {
+   "plane": [
+    "C2",
+    "O1",
+    "H3"
+   ],
+   "rotate": 90,
+   "turn": -35,
+   "tip": -15
+  }
+ },
+ "carbon_monoxide": {
+  "flat": {
+   "plane": [
+    "C1",
+    "O2"
+   ]
+  },
+  "upright": {
+   "plane": [
+    "C1",
+    "O2"
+   ],
+   "rotate": 90,
+   "tip": -20
+  }
+ },
+ "water": {
+  "flat": {
+   "plane": [
+    "O1",
+    "H2",
+    "H3"
+   ],
+   "rotate": -142.24
+  },
+  "upright": {
+   "plane": [
+    "O1",
+    "H2",
+    "H3"
+   ],
+   "rotate": -142.24,
+   "turn": 35,
+   "tip": -15
+  }
+ },
+ "formate_cu111": {
+  "flat": {
+   "plane": [
+    "Cu5",
+    "Cu6",
+    "C1"
+   ]
+  },
+  "upright": {
+   "plane": [
+    "Cu5",
+    "Cu6",
+    "C1"
+   ],
+   "turn": 30,
+   "tip": 15
+  }
+ }
+}

@@ -2,6 +2,8 @@ import phd_ui.fonts as fonts
 import phd_ui.plotting as plotting
 import phd_ui.colors as colors
 import phd_ui.text as text
+import phd_ui.sketch as sketch
+import phd_ui.structure as structure
 
 import matplotlib.pyplot as plt
 from pathlib import Path
@@ -16,6 +18,8 @@ __all__ = [
     "plotting",
     "colors",
     "text",
+    "sketch",
+    "structure",
 ]
 
 BASE_DIR = Path(__file__).resolve().parent

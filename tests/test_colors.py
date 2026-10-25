@@ -147,7 +147,7 @@ def test_prop_cycle_is_the_scheme_line_cycle():
     assert plt.rcParams["axes.prop_cycle"].by_key()["color"] == SCHEME_LINE
 
 
-@pytest.mark.parametrize("module", ["phd_ui.colors", "phd_ui.plotting", "phd_ui.colors.scheme", "phd_ui"])
+@pytest.mark.parametrize("module", ["phd_ui.colors", "phd_ui.plotting", "phd_ui.colors.scheme", "phd_ui.sketch", "phd_ui.structure", "phd_ui"])
 def test_import_order_is_free_of_cycles(module: str):
     """params imports the scheme and preview imports plotting; either side must import first."""
     result = subprocess.run(
