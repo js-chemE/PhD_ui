@@ -1,0 +1,469 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="170mm" height="66mm" viewBox="0 0 11050 4290" xmlns:c2pa="http://c2pa.org/manifest"><metadata><c2pa:manifest>AAAWgmp1bWIAAAAeanVtZGMycGEAEQAQgAAAqgA4m3EDYzJwYQAAABZcanVtYgAAAEdqdW1kYzJtYQARABCAAACqADibcQN1cm46YzJwYTplMjY1ZTUxOS0xYTRjLTQ5MzMtYTE1Mi0zNjY3YWNlMGRkNDEAAAADl2p1bWIAAAApanVtZGMyYXMAEQAQgAAAqgA4m3EDYzJwYS5hc3NlcnRpb25zAAAAALxqdW1iAAAARGp1bWRjYm9yABEAEIAAAKoAOJtxE2MycGEuaW5ncmVkaWVudC52MwAAAAAYYzJzaAA86WrcL66rDzuUPxczwtwAAABwY2JvcqNpZGM6Zm9ybWF0bWltYWdlL3N2Zyt4bWxqaW5zdGFuY2VJRHgseG1wOmlpZDo1OTI2ZmYxOS1mODMwLTRlYTYtYTAwZi1lNjgzYTIzZTlmZDZscmVsYXRpb25zaGlwaHBhcmVudE9mAAAB4mp1bWIAAABBanVtZGNib3IAEQAQgAAAqgA4m3ETYzJwYS5hY3Rpb25zLnYyAAAAABhjMnNo0rvMO8SLH+Tnadw+uUFWfgAAAZljYm9yomdhY3Rpb25zgqJmYWN0aW9ua2MycGEub3BlbmVkanBhcmFtZXRlcnOha2luZ3JlZGllbnRzgaJjdXJseC1zZWxmI2p1bWJmPWMycGEuYXNzZXJ0aW9ucy9jMnBhLmluZ3JlZGllbnQudjNkaGFzaFgg1VctygfRFE2cgKdBxakJhXEXZjyKTlWs5uK8zpUIBX2kZmFjdGlvbngdY29tLmFudGhyb3BpYy5jbGF1ZGUucHJvdmlkZWRqcGFyYW1ldGVyc6F4H2NvbS5hbnRocm9waWMub3JpZ2luLWNvbmZpZGVuY2VndW5rbm93bmtkZXNjcmlwdGlvbnhmQ2xhdWRlIHByb3ZpZGVkIHRoaXMgZmlsZSBhdCB0aGUgcmVxdWVzdCBvZiBhIHVzZXIgYW5kIG1heSBoYXZlIGNyZWF0ZWQgb3IgbW9kaWZpZWQgdGhlIGZpbGUgY29udGVudHMubXNvZnR3YXJlQWdlbnShZG5hbWVmQ2xhdWRlcmFsbEFjdGlvbnNJbmNsdWRlZPUAAADIanVtYgAAAEBqdW1kY2JvcgARABCAAACqADibcRNjMnBhLmhhc2guZGF0YQAAAAAYYzJzaNDUOivA4Yol7QMl1nmI0ocAAACAY2JvcqVjYWxnZnNoYTI1NmNwYWRMAAAAAAAAAAAAAAAAZGhhc2hYIKft2qR9M+Bld/PUN9K1vc2Gje1+T7iM1S9zPaFHFdYXZG5hbWVuanVtYmYgbWFuaWZlc3RqZXhjbHVzaW9uc4GiZXN0YXJ0GQE5Zmxlbmd0aBkeBAAAAj5qdW1iAAAAJ2p1bWRjMmNsABEAEIAAAKoAOJtxA2MycGEuY2xhaW0udjIAAAACD2Nib3KlY2FsZ2ZzaGEyNTZpc2lnbmF0dXJleE1zZWxmI2p1bWJmPS9jMnBhL3VybjpjMnBhOmUyNjVlNTE5LTFhNGMtNDkzMy1hMTUyLTM2NjdhY2UwZGQ0MS9jMnBhLnNpZ25hdHVyZWppbnN0YW5jZUlEeCx4bXA6aWlkOjM5MDY0OTMzLTgzMDEtNDRlMy1hNmFmLWI1YWY1YzdhNzgyN3JjcmVhdGVkX2Fzc2VydGlvbnODomN1cmx4LXNlbGYjanVtYmY9YzJwYS5hc3NlcnRpb25zL2MycGEuaW5ncmVkaWVudC52M2RoYXNoWCDVVy3KB9EUTZyAp0HFqQmFcRdmPIpOVazm4rzOlQgFfaJjdXJseCpzZWxmI2p1bWJmPWMycGEuYXNzZXJ0aW9ucy9jMnBhLmFjdGlvbnMudjJkaGFzaFggJIzDa6NnptAhdJF42OnqOftMJXOKAI2VGaM8XdRqPx+iY3VybHgpc2VsZiNqdW1iZj1jMnBhLmFzc2VydGlvbnMvYzJwYS5oYXNoLmRhdGFkaGFzaFggEExDNBJddJrMHGAPUXmBcsvvZMIh24Z9ryK9dKG6K2B0Y2xhaW1fZ2VuZXJhdG9yX2luZm+jZG5hbWVvQW50aHJvcGljIEZpbGVzZ3ZlcnNpb25lMS4wLjBrc3BlY1ZlcnNpb25lMi40LjAAABA4anVtYgAAAChqdW1kYzJjcwARABCAAACqADibcQNjMnBhLnNpZ25hdHVyZQAAABAIY2JvctKEWQISogEmGCFZAgowggIGMIIBjaADAgECAhRA5aAK7sI50L64g/oGQgU9Z1UTADAKBggqhkjOPQQDAzBJMRcwFQYDVQQKEw5BbnRocm9waWMsIFBCQzEuMCwGA1UEAxMlQW50aHJvcGljIENvbnRlbnQgQ3JlZGVudGlhbHMgUm9vdCBDQTAeFw0yNjA4MDcxODQzNTZaFw0yODA4MDYxOTQzNTZaMEQxFzAVBgNVBAoTDkFudGhyb3BpYywgUEJDMSkwJwYDVQQDEyBBbnRocm9waWMgQ2xhdWRlIENvbnRlbnQgU2lnbmluZzBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABJh6CmvLUBgFFNU0vUKlOVtE6djd17L5SuwX0LemFisBM3dkd/3cyjxFA3Qo5S46fX0/ihY0VZ7mfb9KF703t5OjWDBWMA4GA1UdDwEB/wQEAwIHgDAVBgNVHSUEDjAMBgorBgEEAYPoXgIBMAwGA1UdEwEB/wQCMAAwHwYDVR0jBBgwFoAUzlHiBIFOZFsj+OPEz5o+nMHXXMIwCgYIKoZIzj0EAwMDZwAwZAIwMXMdFJ4BetLLVY7ORuE9noqbbAZOZn/aArXyTwFAZfKrPzxF2vPoJNf1+UCdg1XGAjBwX1zd9WGqYkqmL5SFqw1QySjr1zJfpJM9+1rdDwSPLMOPOjKuiXjoU/pUUeG9RwmhY3BhZFkNngAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPZYQLqMhn/bgXazDJVEm3xUKwgVv4M/wmDoBvVd3W9IEr69R4G6rIMwCaYYyZJrQMzhBiyxRJ0LQkKRKdGge5K0f2E=</c2pa:manifest></metadata>
+ <title>phd_ui atom sheet</title>
+ <desc>phd_ui.sketch; user units are pm; made by phd_ui.sketch.atom_sheet</desc>
+ <style>
+text{font-family:'Source Sans 3', 'Source Sans Pro', sans-serif;fill:#413b34}
+.label{font-size:183.4px}
+.title{font-size:206.4px;font-weight:600}
+.note{font-size:160.5px;fill:#5e6570}
+.frame{fill:none;stroke:#c3c8cf;stroke-width:13.8}
+.leader{fill:none;stroke:#675f56;stroke-width:11.5}
+.site{fill:none;stroke:#0186ae;stroke-width:22.9}
+.arrow{fill:none;stroke:#675f56;stroke-width:18.3}
+.arrowhead{fill:#675f56}
+.atom-Al-ox{fill:#e6d2d2;stroke:#755c5c;stroke-width:13.8;stroke-dasharray:36.7 22.9}
+.atom-Al{fill:#bd9b9b;stroke:#755c5c;stroke-width:13.8}
+.atom-C-ox{fill:#5e6570;stroke:#2b2d30;stroke-width:13.8;stroke-dasharray:36.7 22.9}
+.atom-C{fill:#3f4245;stroke:#2b2d30;stroke-width:13.8}
+.atom-Cu-ox{fill:#d8ae88;stroke:#683b02;stroke-width:13.8;stroke-dasharray:36.7 22.9}
+.atom-Cu{fill:#bb731e;stroke:#683b02;stroke-width:13.8}
+.atom-Ga-ox{fill:#dfb9b9;stroke:#724445;stroke-width:13.8;stroke-dasharray:36.7 22.9}
+.atom-Ga{fill:#be7e7f;stroke:#724445;stroke-width:13.8}
+.atom-H-ox{fill:#ffffff;stroke:#a7a195;stroke-width:13.8;stroke-dasharray:36.7 22.9}
+.atom-H{fill:#f4f3f1;stroke:#a7a195;stroke-width:13.8}
+.atom-In-ox{fill:#c2a2a0;stroke:#573130;stroke-width:13.8;stroke-dasharray:36.7 22.9}
+.atom-In{fill:#a06a68;stroke:#573130;stroke-width:13.8}
+.atom-M-ox{fill:#c3c8cf;stroke:#5e6570;stroke-width:13.8;stroke-dasharray:36.7 22.9}
+.atom-M{fill:#9aa1ac;stroke:#5e6570;stroke-width:13.8}
+.atom-N-ox{fill:#8197d0;stroke:#13246d;stroke-width:13.8;stroke-dasharray:36.7 22.9}
+.atom-N{fill:#4160c4;stroke:#13246d;stroke-width:13.8}
+.atom-Ni-ox{fill:#b0ceae;stroke:#365e34;stroke-width:13.8;stroke-dasharray:36.7 22.9}
+.atom-Ni{fill:#6ca26a;stroke:#365e34;stroke-width:13.8}
+.atom-O-ox{fill:#cf7d75;stroke:#7a1f1a;stroke-width:13.8;stroke-dasharray:36.7 22.9}
+.atom-O{fill:#c44036;stroke:#7a1f1a;stroke-width:13.8}
+.atom-P-ox{fill:#e1805d;stroke:#7b2800;stroke-width:13.8;stroke-dasharray:36.7 22.9}
+.atom-P{fill:#db551a;stroke:#7b2800;stroke-width:13.8}
+.atom-Pd-ox{fill:#7c9fad;stroke:#013343;stroke-width:13.8;stroke-dasharray:36.7 22.9}
+.atom-Pd{fill:#2b738b;stroke:#013343;stroke-width:13.8}
+.atom-Pt-ox{fill:#dddde7;stroke:#686774;stroke-width:13.8;stroke-dasharray:36.7 22.9}
+.atom-Pt{fill:#a9a9ba;stroke:#686774;stroke-width:13.8}
+.atom-S-ox{fill:#f2f4b4;stroke:#91922e;stroke-width:13.8;stroke-dasharray:36.7 22.9}
+.atom-S{fill:#d8d958;stroke:#91922e;stroke-width:13.8}
+.atom-Si-ox{fill:#feebd8;stroke:#8e755c;stroke-width:13.8;stroke-dasharray:36.7 22.9}
+.atom-Si{fill:#d9b795;stroke:#8e755c;stroke-width:13.8}
+.atom-Zn-ox{fill:#adafca;stroke:#3d3f60;stroke-width:13.8;stroke-dasharray:36.7 22.9}
+.atom-Zn{fill:#797caa;stroke:#3d3f60;stroke-width:13.8}
+.vacancy-Al{fill:none;stroke:#755c5c;stroke-width:13.8;stroke-dasharray:36.7 22.9}
+.vacancy-C{fill:none;stroke:#2b2d30;stroke-width:13.8;stroke-dasharray:36.7 22.9}
+.vacancy-Cu{fill:none;stroke:#683b02;stroke-width:13.8;stroke-dasharray:36.7 22.9}
+.vacancy-Ga{fill:none;stroke:#724445;stroke-width:13.8;stroke-dasharray:36.7 22.9}
+.vacancy-H{fill:none;stroke:#a7a195;stroke-width:13.8;stroke-dasharray:36.7 22.9}
+.vacancy-In{fill:none;stroke:#573130;stroke-width:13.8;stroke-dasharray:36.7 22.9}
+.vacancy-M{fill:none;stroke:#5e6570;stroke-width:13.8;stroke-dasharray:36.7 22.9}
+.vacancy-N{fill:none;stroke:#13246d;stroke-width:13.8;stroke-dasharray:36.7 22.9}
+.vacancy-Ni{fill:none;stroke:#365e34;stroke-width:13.8;stroke-dasharray:36.7 22.9}
+.vacancy-O{fill:none;stroke:#7a1f1a;stroke-width:13.8;stroke-dasharray:36.7 22.9}
+.vacancy-P{fill:none;stroke:#7b2800;stroke-width:13.8;stroke-dasharray:36.7 22.9}
+.vacancy-Pd{fill:none;stroke:#013343;stroke-width:13.8;stroke-dasharray:36.7 22.9}
+.vacancy-Pt{fill:none;stroke:#686774;stroke-width:13.8;stroke-dasharray:36.7 22.9}
+.vacancy-S{fill:none;stroke:#91922e;stroke-width:13.8;stroke-dasharray:36.7 22.9}
+.vacancy-Si{fill:none;stroke:#8e755c;stroke-width:13.8;stroke-dasharray:36.7 22.9}
+.vacancy-Zn{fill:none;stroke:#3d3f60;stroke-width:13.8;stroke-dasharray:36.7 22.9}
+</style>
+ <defs>
+  <symbol id="atom-H" viewBox="-63.5 -63.5 127 127" overflow="visible">
+   <circle class="atom-H" r="56.6" />
+  </symbol>
+  <symbol id="atom-H-ox" viewBox="-63.5 -63.5 127 127" overflow="visible">
+   <circle class="atom-H-ox" r="56.6" />
+  </symbol>
+  <symbol id="atom-C" viewBox="-99.4 -99.4 198.8 198.8" overflow="visible">
+   <circle class="atom-C" r="92.5" />
+  </symbol>
+  <symbol id="atom-C-ox" viewBox="-99.4 -99.4 198.8 198.8" overflow="visible">
+   <circle class="atom-C-ox" r="92.5" />
+  </symbol>
+  <symbol id="atom-N" viewBox="-96.1 -96.1 192.1 192.1" overflow="visible">
+   <circle class="atom-N" r="89.2" />
+  </symbol>
+  <symbol id="atom-N-ox" viewBox="-96.1 -96.1 192.1 192.1" overflow="visible">
+   <circle class="atom-N-ox" r="89.2" />
+  </symbol>
+  <symbol id="atom-O" viewBox="-92.6 -92.6 185.3 185.3" overflow="visible">
+   <circle class="atom-O" r="85.7" />
+  </symbol>
+  <symbol id="atom-O-ox" viewBox="-92.6 -92.6 185.3 185.3" overflow="visible">
+   <circle class="atom-O-ox" r="85.7" />
+  </symbol>
+  <symbol id="atom-P" viewBox="-117.9 -117.9 235.9 235.9" overflow="visible">
+   <circle class="atom-P" r="111.1" />
+  </symbol>
+  <symbol id="atom-P-ox" viewBox="-117.9 -117.9 235.9 235.9" overflow="visible">
+   <circle class="atom-P-ox" r="111.1" />
+  </symbol>
+  <symbol id="atom-S" viewBox="-116.8 -116.8 233.7 233.7" overflow="visible">
+   <circle class="atom-S" r="110" />
+  </symbol>
+  <symbol id="atom-S-ox" viewBox="-116.8 -116.8 233.7 233.7" overflow="visible">
+   <circle class="atom-S-ox" r="110" />
+  </symbol>
+  <symbol id="atom-Al" viewBox="-125.4 -125.4 250.8 250.8" overflow="visible">
+   <circle class="atom-Al" r="118.5" />
+  </symbol>
+  <symbol id="atom-Al-ox" viewBox="-125.4 -125.4 250.8 250.8" overflow="visible">
+   <circle class="atom-Al-ox" r="118.5" />
+  </symbol>
+  <symbol id="atom-Si" viewBox="-120.1 -120.1 240.2 240.2" overflow="visible">
+   <circle class="atom-Si" r="113.2" />
+  </symbol>
+  <symbol id="atom-Si-ox" viewBox="-120.1 -120.1 240.2 240.2" overflow="visible">
+   <circle class="atom-Si-ox" r="113.2" />
+  </symbol>
+  <symbol id="atom-Ni" viewBox="-127 -127 253.9 253.9" overflow="visible">
+   <circle class="atom-Ni" r="120.1" />
+  </symbol>
+  <symbol id="atom-Ni-ox" viewBox="-127 -127 253.9 253.9" overflow="visible">
+   <circle class="atom-Ni-ox" r="120.1" />
+  </symbol>
+  <symbol id="atom-Cu" viewBox="-131 -131 262 262" overflow="visible">
+   <circle class="atom-Cu" r="124.1" />
+  </symbol>
+  <symbol id="atom-Cu-ox" viewBox="-131 -131 262 262" overflow="visible">
+   <circle class="atom-Cu-ox" r="124.1" />
+  </symbol>
+  <symbol id="atom-Zn" viewBox="-125.9 -125.9 251.9 251.9" overflow="visible">
+   <circle class="atom-Zn" r="119.1" />
+  </symbol>
+  <symbol id="atom-Zn-ox" viewBox="-125.9 -125.9 251.9 251.9" overflow="visible">
+   <circle class="atom-Zn-ox" r="119.1" />
+  </symbol>
+  <symbol id="atom-Ga" viewBox="-125.9 -125.9 251.9 251.9" overflow="visible">
+   <circle class="atom-Ga" r="119.1" />
+  </symbol>
+  <symbol id="atom-Ga-ox" viewBox="-125.9 -125.9 251.9 251.9" overflow="visible">
+   <circle class="atom-Ga-ox" r="119.1" />
+  </symbol>
+  <symbol id="atom-Pd" viewBox="-134.4 -134.4 268.8 268.8" overflow="visible">
+   <circle class="atom-Pd" r="127.5" />
+  </symbol>
+  <symbol id="atom-Pd-ox" viewBox="-134.4 -134.4 268.8 268.8" overflow="visible">
+   <circle class="atom-Pd-ox" r="127.5" />
+  </symbol>
+  <symbol id="atom-In" viewBox="-135.9 -135.9 271.7 271.7" overflow="visible">
+   <circle class="atom-In" r="129" />
+  </symbol>
+  <symbol id="atom-In-ox" viewBox="-135.9 -135.9 271.7 271.7" overflow="visible">
+   <circle class="atom-In-ox" r="129" />
+  </symbol>
+  <symbol id="atom-Pt" viewBox="-133 -133 265.9 265.9" overflow="visible">
+   <circle class="atom-Pt" r="126.1" />
+  </symbol>
+  <symbol id="atom-Pt-ox" viewBox="-133 -133 265.9 265.9" overflow="visible">
+   <circle class="atom-Pt-ox" r="126.1" />
+  </symbol>
+  <symbol id="atom-M" viewBox="-132.5 -132.5 265 265" overflow="visible">
+   <circle class="atom-M" r="125.6" />
+  </symbol>
+  <symbol id="atom-M-ox" viewBox="-132.5 -132.5 265 265" overflow="visible">
+   <circle class="atom-M-ox" r="125.6" />
+  </symbol>
+ </defs>
+ <g id="row-names" inkscape:groupmode="layer" inkscape:label="row-names">
+  <text class="label" x="130" y="718.8">plain</text>
+  <text class="label" x="130" y="1303.8">ox</text>
+  <text class="label" x="130" y="1888.8">vacancy</text>
+  <text class="label" x="130" y="2473.8">site</text>
+  <text class="label" x="130" y="3058.8">ion</text>
+ </g>
+ <g id="element-H" inkscape:groupmode="layer" inkscape:label="element-H">
+  <text class="title" x="1430" y="357.5" text-anchor="middle">H</text>
+  <g id="element-H.plain">
+   <use xlink:href="#atom-H" x="1366.5" y="586.5" width="127" height="127" />
+  </g>
+  <g id="element-H.ox">
+   <use xlink:href="#atom-H-ox" x="1366.5" y="1171.5" width="127" height="127" />
+  </g>
+  <g id="element-H.vacancy">
+   <circle class="vacancy-H" cx="1430" cy="1820" r="56.6" />
+  </g>
+  <g id="element-H.site">
+   <use xlink:href="#atom-H" x="1366.5" y="2341.5" width="127" height="127" />
+   <circle class="site" cx="1430" cy="2405" r="109.3" />
+  </g>
+ </g>
+ <g id="element-C" inkscape:groupmode="layer" inkscape:label="element-C">
+  <text class="title" x="2015" y="357.5" text-anchor="middle">C</text>
+  <g id="element-C.plain">
+   <use xlink:href="#atom-C" x="1915.6" y="550.6" width="198.8" height="198.8" />
+  </g>
+  <g id="element-C.ox">
+   <use xlink:href="#atom-C-ox" x="1915.6" y="1135.6" width="198.8" height="198.8" />
+  </g>
+  <g id="element-C.vacancy">
+   <circle class="vacancy-C" cx="2015" cy="1820" r="92.5" />
+  </g>
+  <g id="element-C.site">
+   <use xlink:href="#atom-C" x="1915.6" y="2305.6" width="198.8" height="198.8" />
+   <circle class="site" cx="2015" cy="2405" r="145.3" />
+  </g>
+ </g>
+ <g id="element-N" inkscape:groupmode="layer" inkscape:label="element-N">
+  <text class="title" x="2600" y="357.5" text-anchor="middle">N</text>
+  <g id="element-N.plain">
+   <use xlink:href="#atom-N" x="2503.9" y="553.9" width="192.1" height="192.1" />
+  </g>
+  <g id="element-N.ox">
+   <use xlink:href="#atom-N-ox" x="2503.9" y="1138.9" width="192.1" height="192.1" />
+  </g>
+  <g id="element-N.vacancy">
+   <circle class="vacancy-N" cx="2600" cy="1820" r="89.2" />
+  </g>
+  <g id="element-N.site">
+   <use xlink:href="#atom-N" x="2503.9" y="2308.9" width="192.1" height="192.1" />
+   <circle class="site" cx="2600" cy="2405" r="141.9" />
+  </g>
+ </g>
+ <g id="element-O" inkscape:groupmode="layer" inkscape:label="element-O">
+  <text class="title" x="3185" y="357.5" text-anchor="middle">O</text>
+  <g id="element-O.plain">
+   <use xlink:href="#atom-O" x="3092.4" y="557.4" width="185.3" height="185.3" />
+  </g>
+  <g id="element-O.ox">
+   <use xlink:href="#atom-O-ox" x="3092.4" y="1142.4" width="185.3" height="185.3" />
+  </g>
+  <g id="element-O.vacancy">
+   <circle class="vacancy-O" cx="3185" cy="1820" r="85.7" />
+  </g>
+  <g id="element-O.site">
+   <use xlink:href="#atom-O" x="3092.4" y="2312.4" width="185.3" height="185.3" />
+   <circle class="site" cx="3185" cy="2405" r="138.5" />
+  </g>
+  <g id="element-O.ion-O2-">
+   <circle class="atom-O" cx="3185" cy="2990" r="128" />
+   <text class="note" x="3185" y="3285.4" text-anchor="middle"><tspan>O</tspan><tspan dy="-57.8" font-size="112.4">2-</tspan></text>
+  </g>
+  <g id="element-O.ion-O2--IV-">
+   <circle class="atom-O" cx="3185" cy="3575" r="127.1" />
+   <text class="note" x="3185" y="3869.5" text-anchor="middle"><tspan>O</tspan><tspan dy="-57.8" font-size="112.4">2-</tspan><tspan dy="57.8"> IV</tspan></text>
+  </g>
+ </g>
+ <g id="element-P" inkscape:groupmode="layer" inkscape:label="element-P">
+  <text class="title" x="3770" y="357.5" text-anchor="middle">P</text>
+  <g id="element-P.plain">
+   <use xlink:href="#atom-P" x="3652.1" y="532.1" width="235.9" height="235.9" />
+  </g>
+  <g id="element-P.ox">
+   <use xlink:href="#atom-P-ox" x="3652.1" y="1117.1" width="235.9" height="235.9" />
+  </g>
+  <g id="element-P.vacancy">
+   <circle class="vacancy-P" cx="3770" cy="1820" r="111.1" />
+  </g>
+  <g id="element-P.site">
+   <use xlink:href="#atom-P" x="3652.1" y="2287.1" width="235.9" height="235.9" />
+   <circle class="site" cx="3770" cy="2405" r="163.8" />
+  </g>
+ </g>
+ <g id="element-S" inkscape:groupmode="layer" inkscape:label="element-S">
+  <text class="title" x="4355" y="357.5" text-anchor="middle">S</text>
+  <g id="element-S.plain">
+   <use xlink:href="#atom-S" x="4238.2" y="533.2" width="233.7" height="233.7" />
+  </g>
+  <g id="element-S.ox">
+   <use xlink:href="#atom-S-ox" x="4238.2" y="1118.2" width="233.7" height="233.7" />
+  </g>
+  <g id="element-S.vacancy">
+   <circle class="vacancy-S" cx="4355" cy="1820" r="110" />
+  </g>
+  <g id="element-S.site">
+   <use xlink:href="#atom-S" x="4238.2" y="2288.2" width="233.7" height="233.7" />
+   <circle class="site" cx="4355" cy="2405" r="162.7" />
+  </g>
+ </g>
+ <g id="element-Al" inkscape:groupmode="layer" inkscape:label="element-Al">
+  <text class="title" x="4940" y="357.5" text-anchor="middle">Al</text>
+  <g id="element-Al.plain">
+   <use xlink:href="#atom-Al" x="4814.6" y="524.6" width="250.8" height="250.8" />
+  </g>
+  <g id="element-Al.ox">
+   <use xlink:href="#atom-Al-ox" x="4814.6" y="1109.6" width="250.8" height="250.8" />
+  </g>
+  <g id="element-Al.vacancy">
+   <circle class="vacancy-Al" cx="4940" cy="1820" r="118.5" />
+  </g>
+  <g id="element-Al.site">
+   <use xlink:href="#atom-Al" x="4814.6" y="2279.6" width="250.8" height="250.8" />
+   <circle class="site" cx="4940" cy="2405" r="171.3" />
+  </g>
+  <g id="element-Al.ion-Al3-">
+   <circle class="atom-Al" cx="4940" cy="2990" r="76.5" />
+   <text class="note" x="4940" y="3233.9" text-anchor="middle"><tspan>Al</tspan><tspan dy="-57.8" font-size="112.4">3+</tspan></text>
+  </g>
+ </g>
+ <g id="element-Si" inkscape:groupmode="layer" inkscape:label="element-Si">
+  <text class="title" x="5525" y="357.5" text-anchor="middle">Si</text>
+  <g id="element-Si.plain">
+   <use xlink:href="#atom-Si" x="5404.9" y="529.9" width="240.2" height="240.2" />
+  </g>
+  <g id="element-Si.ox">
+   <use xlink:href="#atom-Si-ox" x="5404.9" y="1114.9" width="240.2" height="240.2" />
+  </g>
+  <g id="element-Si.vacancy">
+   <circle class="vacancy-Si" cx="5525" cy="1820" r="113.2" />
+  </g>
+  <g id="element-Si.site">
+   <use xlink:href="#atom-Si" x="5404.9" y="2284.9" width="240.2" height="240.2" />
+   <circle class="site" cx="5525" cy="2405" r="166" />
+  </g>
+ </g>
+ <g id="element-Ni" inkscape:groupmode="layer" inkscape:label="element-Ni">
+  <text class="title" x="6110" y="357.5" text-anchor="middle">Ni</text>
+  <g id="element-Ni.plain">
+   <use xlink:href="#atom-Ni" x="5983" y="523" width="253.9" height="253.9" />
+  </g>
+  <g id="element-Ni.ox">
+   <use xlink:href="#atom-Ni-ox" x="5983" y="1108" width="253.9" height="253.9" />
+  </g>
+  <g id="element-Ni.vacancy">
+   <circle class="vacancy-Ni" cx="6110" cy="1820" r="120.1" />
+  </g>
+  <g id="element-Ni.site">
+   <use xlink:href="#atom-Ni" x="5983" y="2278" width="253.9" height="253.9" />
+   <circle class="site" cx="6110" cy="2405" r="172.8" />
+  </g>
+  <g id="element-Ni.ion-Ni2-">
+   <circle class="atom-Ni" cx="6110" cy="2990" r="87.8" />
+   <text class="note" x="6110" y="3245.2" text-anchor="middle"><tspan>Ni</tspan><tspan dy="-57.8" font-size="112.4">2+</tspan></text>
+  </g>
+ </g>
+ <g id="element-Cu" inkscape:groupmode="layer" inkscape:label="element-Cu">
+  <text class="title" x="6695" y="357.5" text-anchor="middle">Cu</text>
+  <g id="element-Cu.plain">
+   <use xlink:href="#atom-Cu" x="6564" y="519" width="262" height="262" />
+  </g>
+  <g id="element-Cu.ox">
+   <use xlink:href="#atom-Cu-ox" x="6564" y="1104" width="262" height="262" />
+  </g>
+  <g id="element-Cu.vacancy">
+   <circle class="vacancy-Cu" cx="6695" cy="1820" r="124.1" />
+  </g>
+  <g id="element-Cu.site">
+   <use xlink:href="#atom-Cu" x="6564" y="2274" width="262" height="262" />
+   <circle class="site" cx="6695" cy="2405" r="176.9" />
+  </g>
+  <g id="element-Cu.ion-Cu-">
+   <circle class="atom-Cu" cx="6695" cy="2990" r="93.2" />
+   <text class="note" x="6695" y="3250.6" text-anchor="middle"><tspan>Cu</tspan><tspan dy="-57.8" font-size="112.4">+</tspan></text>
+  </g>
+  <g id="element-Cu.ion-Cu2-">
+   <circle class="atom-Cu" cx="6695" cy="3575" r="90.5" />
+   <text class="note" x="6695" y="3832.9" text-anchor="middle"><tspan>Cu</tspan><tspan dy="-57.8" font-size="112.4">2+</tspan></text>
+  </g>
+ </g>
+ <g id="element-Zn" inkscape:groupmode="layer" inkscape:label="element-Zn">
+  <text class="title" x="7280" y="357.5" text-anchor="middle">Zn</text>
+  <g id="element-Zn.plain">
+   <use xlink:href="#atom-Zn" x="7154.1" y="524.1" width="251.9" height="251.9" />
+  </g>
+  <g id="element-Zn.ox">
+   <use xlink:href="#atom-Zn-ox" x="7154.1" y="1109.1" width="251.9" height="251.9" />
+  </g>
+  <g id="element-Zn.vacancy">
+   <circle class="vacancy-Zn" cx="7280" cy="1820" r="119.1" />
+  </g>
+  <g id="element-Zn.site">
+   <use xlink:href="#atom-Zn" x="7154.1" y="2279.1" width="251.9" height="251.9" />
+   <circle class="site" cx="7280" cy="2405" r="171.8" />
+  </g>
+  <g id="element-Zn.ion-Zn2-">
+   <circle class="atom-Zn" cx="7280" cy="2990" r="91.2" />
+   <text class="note" x="7280" y="3248.6" text-anchor="middle"><tspan>Zn</tspan><tspan dy="-57.8" font-size="112.4">2+</tspan></text>
+  </g>
+  <g id="element-Zn.ion-Zn2--IV-">
+   <circle class="atom-Zn" cx="7280" cy="3575" r="81.4" />
+   <text class="note" x="7280" y="3823.8" text-anchor="middle"><tspan>Zn</tspan><tspan dy="-57.8" font-size="112.4">2+</tspan><tspan dy="57.8"> IV</tspan></text>
+  </g>
+ </g>
+ <g id="element-Ga" inkscape:groupmode="layer" inkscape:label="element-Ga">
+  <text class="title" x="7865" y="357.5" text-anchor="middle">Ga</text>
+  <g id="element-Ga.plain">
+   <use xlink:href="#atom-Ga" x="7739.1" y="524.1" width="251.9" height="251.9" />
+  </g>
+  <g id="element-Ga.ox">
+   <use xlink:href="#atom-Ga-ox" x="7739.1" y="1109.1" width="251.9" height="251.9" />
+  </g>
+  <g id="element-Ga.vacancy">
+   <circle class="vacancy-Ga" cx="7865" cy="1820" r="119.1" />
+  </g>
+  <g id="element-Ga.site">
+   <use xlink:href="#atom-Ga" x="7739.1" y="2279.1" width="251.9" height="251.9" />
+   <circle class="site" cx="7865" cy="2405" r="171.8" />
+  </g>
+  <g id="element-Ga.ion-Ga3-">
+   <circle class="atom-Ga" cx="7865" cy="2990" r="82.9" />
+   <text class="note" x="7865" y="3240.3" text-anchor="middle"><tspan>Ga</tspan><tspan dy="-57.8" font-size="112.4">3+</tspan></text>
+  </g>
+  <g id="element-Ga.ion-Ga3--IV-">
+   <circle class="atom-Ga" cx="7865" cy="3575" r="71.3" />
+   <text class="note" x="7865" y="3813.7" text-anchor="middle"><tspan>Ga</tspan><tspan dy="-57.8" font-size="112.4">3+</tspan><tspan dy="57.8"> IV</tspan></text>
+  </g>
+ </g>
+ <g id="element-Pd" inkscape:groupmode="layer" inkscape:label="element-Pd">
+  <text class="title" x="8450" y="357.5" text-anchor="middle">Pd</text>
+  <g id="element-Pd.plain">
+   <use xlink:href="#atom-Pd" x="8315.6" y="515.6" width="268.8" height="268.8" />
+  </g>
+  <g id="element-Pd.ox">
+   <use xlink:href="#atom-Pd-ox" x="8315.6" y="1100.6" width="268.8" height="268.8" />
+  </g>
+  <g id="element-Pd.vacancy">
+   <circle class="vacancy-Pd" cx="8450" cy="1820" r="127.5" />
+  </g>
+  <g id="element-Pd.site">
+   <use xlink:href="#atom-Pd" x="8315.6" y="2270.6" width="268.8" height="268.8" />
+   <circle class="site" cx="8450" cy="2405" r="180.3" />
+  </g>
+ </g>
+ <g id="element-In" inkscape:groupmode="layer" inkscape:label="element-In">
+  <text class="title" x="9035" y="357.5" text-anchor="middle">In</text>
+  <g id="element-In.plain">
+   <use xlink:href="#atom-In" x="8899.1" y="514.1" width="271.7" height="271.7" />
+  </g>
+  <g id="element-In.ox">
+   <use xlink:href="#atom-In-ox" x="8899.1" y="1099.1" width="271.7" height="271.7" />
+  </g>
+  <g id="element-In.vacancy">
+   <circle class="vacancy-In" cx="9035" cy="1820" r="129" />
+  </g>
+  <g id="element-In.site">
+   <use xlink:href="#atom-In" x="8899.1" y="2269.1" width="271.7" height="271.7" />
+   <circle class="site" cx="9035" cy="2405" r="181.7" />
+  </g>
+  <g id="element-In.ion-In3-">
+   <circle class="atom-In" cx="9035" cy="2990" r="95.1" />
+   <text class="note" x="9035" y="3252.5" text-anchor="middle"><tspan>In</tspan><tspan dy="-57.8" font-size="112.4">3+</tspan></text>
+  </g>
+ </g>
+ <g id="element-Pt" inkscape:groupmode="layer" inkscape:label="element-Pt">
+  <text class="title" x="9620" y="357.5" text-anchor="middle">Pt</text>
+  <g id="element-Pt.plain">
+   <use xlink:href="#atom-Pt" x="9487" y="517" width="265.9" height="265.9" />
+  </g>
+  <g id="element-Pt.ox">
+   <use xlink:href="#atom-Pt-ox" x="9487" y="1102" width="265.9" height="265.9" />
+  </g>
+  <g id="element-Pt.vacancy">
+   <circle class="vacancy-Pt" cx="9620" cy="1820" r="126.1" />
+  </g>
+  <g id="element-Pt.site">
+   <use xlink:href="#atom-Pt" x="9487" y="2272" width="265.9" height="265.9" />
+   <circle class="site" cx="9620" cy="2405" r="178.8" />
+  </g>
+ </g>
+ <g id="element-M" inkscape:groupmode="layer" inkscape:label="element-M">
+  <text class="title" x="10205" y="357.5" text-anchor="middle">M</text>
+  <g id="element-M.plain">
+   <use xlink:href="#atom-M" x="10072.5" y="517.5" width="265" height="265" />
+  </g>
+  <g id="element-M.ox">
+   <use xlink:href="#atom-M-ox" x="10072.5" y="1102.5" width="265" height="265" />
+  </g>
+  <g id="element-M.vacancy">
+   <circle class="vacancy-M" cx="10205" cy="1820" r="125.6" />
+  </g>
+  <g id="element-M.site">
+   <use xlink:href="#atom-M" x="10072.5" y="2272.5" width="265" height="265" />
+   <circle class="site" cx="10205" cy="2405" r="178.3" />
+  </g>
+ </g>
+</svg>

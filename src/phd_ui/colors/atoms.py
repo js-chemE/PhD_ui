@@ -20,18 +20,31 @@ Atoms
 - **Flat.** One fill, one thin edge in a darker tone of the same hue, no
   gradient, no highlight, no shadow. Hansen et al. (2025) draw this way and
   it survives reduction to a 9 cm column; shading does not.
-- **Size is the covalent radius** (Cordero et al., Dalton Trans. 2008,
-  2832), scaled by one factor per figure. H is drawn at that true size and
-  so comes out small, which is right: it is the atom readers least need.
+- **Size follows the covalent radius** (Cordero et al., Dalton Trans.
+  2008, 2832), **compressed** so a difference in size is indicated, not
+  shown to scale: the drawn radius is
+  ``SIZE_REFERENCE_PM * (r / SIZE_REFERENCE_PM) ** SIZE_EXPONENT``
+  (:func:`drawn_radius_pm`, ``Atom.drawn_pm``). At the exponent of 0.5 the
+  order of sizes is kept but every ratio is its square root: H against O
+  goes from 2.1 to 1.5, so H no longer vanishes next to O in methanol. The
+  true radius stays in ``radius_pm`` for anything that needs a length.
+- **Ions take the ionic radius** (Shannon, Acta Crystallogr. A 1976, 32,
+  751), from :data:`IONS`, in the colour of their element and compressed
+  the same way. Use it for the lattice of an oxide: there O2- (140 pm) is
+  the large ion and the cation sits smaller between them, the reverse of
+  the covalent picture (O 66 pm, Ga 122 pm). A metal stays covalent in the
+  same drawing.
 
 Bonds
 -----
 Bonds are drawn first and the atoms on top, so a bond needs no trimming.
 Its *visible* length is then the centre distance minus both drawn radii.
-With radii at ``BALL_SCALE`` (0.5) of the covalent radius and centres at
-the true bond length (the sum of the covalent radii), the visible stick is
-about half the centre distance: long enough to show a double bond's two
-lines, short enough that the molecule still reads as one object. At a
+With radii at ``BALL_SCALE`` (0.38) of the compressed radius and centres
+at the true bond length (the sum of the covalent radii), the visible stick
+is about half the centre distance: long enough to show a double bond's two
+lines, short enough that the molecule still reads as one object. 0.38
+keeps C at the size it had before the compression (0.5 of 76 pm) while H
+grows; at 0.5 the compressed balls swallow the C-H and O-H sticks. At a
 ``BALL_SCALE`` of 1.0 the atoms touch and the drawing becomes
 space-filling, which is the right choice for a nanoparticle or a slab.
 
@@ -75,12 +88,47 @@ __all__ = [
     "BOND_STYLES",
     "BOND_COLOR",
     "LABEL_MIN_DIAMETER_MM",
+    "SIZE_EXPONENT",
+    "SIZE_REFERENCE_PM",
+    "drawn_radius_pm",
+    "Ion",
+    "IONS",
     "bond_length_pm",
     "get_atom",
+    "get_ion",
 ]
 
-#: Drawn radius as a fraction of the covalent radius, for ball and stick.
-BALL_SCALE: float = 0.5
+#: Drawn radius as a fraction of the compressed radius, for ball and stick.
+#: 0.38 keeps C at its former size (0.5 of 76 pm) under the compression.
+BALL_SCALE: float = 0.38
+
+#: Exponent of the size compression: 1 draws true radii, 0 draws every atom
+#: alike. At 0.5 each size ratio becomes its square root.
+SIZE_EXPONENT: float = 0.5
+
+#: Radius that the compression leaves unchanged, in pm: about a transition
+#: metal (Cu 132, Zn 122, Ga 122), so metal slabs keep their true size and
+#: small atoms are lifted towards it.
+SIZE_REFERENCE_PM: float = 130.0
+
+
+def drawn_radius_pm(radius_pm: float, exponent: float = SIZE_EXPONENT) -> float:
+    """
+    Radius to draw for a true radius: differences indicated, not to scale.
+
+    Parameters
+    ----------
+    radius_pm : float
+        True (covalent or ionic) radius, in pm.
+    exponent : float, optional
+        Compression; 1 returns `radius_pm` unchanged.
+
+    Returns
+    -------
+    float
+        ``SIZE_REFERENCE_PM * (radius_pm / SIZE_REFERENCE_PM) ** exponent``.
+    """
+    return SIZE_REFERENCE_PM * (radius_pm / SIZE_REFERENCE_PM) ** exponent
 
 #: Smallest drawn atom diameter, in mm at final size, that holds a symbol.
 LABEL_MIN_DIAMETER_MM: float = 4.0
@@ -123,6 +171,11 @@ class Atom:
     text: str
     radius_pm: float
 
+    @property
+    def drawn_pm(self) -> float:
+        """Radius to draw, in pm: `radius_pm` through :func:`drawn_radius_pm`."""
+        return drawn_radius_pm(self.radius_pm)
+
 
 _WHITE_TEXT = "#ffffff"
 _DARK_TEXT = INK.base
@@ -145,6 +198,58 @@ ATOMS: dict[str, Atom] = {a.symbol: a for a in (
     Atom("In", "indium",    "#a06a68",    "#573130", "#c2a2a0", _WHITE_TEXT, 142),
     Atom("Pt", "platinum",  "#a9a9ba",    "#686774", "#dddde7", _DARK_TEXT,  136),
     Atom("M", "metal",      GREY.base,    GREY.dark, GREY.light, _DARK_TEXT, 135),
+)}
+
+
+@dataclass(frozen=True)
+class Ion:
+    """
+    Effective ionic radius of one ion in one coordination.
+
+    Parameters
+    ----------
+    key : str
+        Ion name as written in a drawing, element and charge: ``'Ga3+'``,
+        ``'O2-'``; a coordination other than the default carries a suffix,
+        ``'Ga3+(IV)'``.
+    symbol : str
+        Element symbol, the key into :data:`ATOMS` for its colours.
+    charge : int
+        Formal charge.
+    cn : int
+        Coordination number the radius belongs to.
+    radius_pm : float
+        Effective ionic radius (Shannon 1976), in pm.
+    """
+
+    key: str
+    symbol: str
+    charge: int
+    cn: int
+    radius_pm: float
+
+    @property
+    def drawn_pm(self) -> float:
+        """Radius to draw, in pm: `radius_pm` through :func:`drawn_radius_pm`."""
+        return drawn_radius_pm(self.radius_pm)
+
+
+# Shannon, Acta Crystallogr. A 1976, 32, 751, Table 1, effective ionic radii,
+# read off the paper; octahedral (VI) is the unsuffixed entry. Only ions that
+# come up in the catalysts drawn here; add rows from the same table.
+IONS: dict[str, Ion] = {i.key: i for i in (
+    #   key          symbol charge cn  r / pm
+    Ion("O2-",       "O",   -2,    6,  140),
+    Ion("O2-(IV)",   "O",   -2,    4,  138),
+    Ion("Ga3+",      "Ga",   3,    6,  62),
+    Ion("Ga3+(IV)",  "Ga",   3,    4,  47),
+    Ion("Cu+",       "Cu",   1,    6,  77),
+    Ion("Cu2+",      "Cu",   2,    6,  73),
+    Ion("Zn2+",      "Zn",   2,    6,  74),
+    Ion("Zn2+(IV)",  "Zn",   2,    4,  60),
+    Ion("Al3+",      "Al",   3,    6,  53.5),
+    Ion("In3+",      "In",   3,    6,  80),
+    Ion("Ni2+",      "Ni",   2,    6,  69),
 )}
 
 
@@ -213,6 +318,31 @@ def get_atom(symbol: str) -> Atom:
     return ATOMS[symbol]
 
 
+def get_ion(key: str) -> Ion:
+    """
+    Look up an ion's radius.
+
+    Parameters
+    ----------
+    key : str
+        Ion name, e.g. ``'Ga3+'`` or ``'Zn2+(IV)'``.
+
+    Returns
+    -------
+    Ion
+        The ion.
+
+    Raises
+    ------
+    KeyError
+        If the ion has no entry; the message lists the known ones.
+    """
+    if key not in IONS:
+        raise KeyError(f"No ionic radius for '{key}'. Known: {', '.join(IONS)}; "
+                       "add it to IONS from Shannon 1976, Table 1.")
+    return IONS[key]
+
+
 def bond_length_pm(a: str, b: str) -> float:
     """
     Centre distance of two bonded atoms: the sum of their covalent radii.
@@ -229,7 +359,8 @@ def bond_length_pm(a: str, b: str) -> float:
 
     Notes
     -----
-    Use it for the centre distance in a drawing and scale the drawn radii by
-    :data:`BALL_SCALE`; the visible bond is then about half the distance.
+    Use it for the centre distance in a drawing and draw the atoms at
+    ``Atom.drawn_pm * BALL_SCALE``; the visible bond is then about half the
+    distance.
     """
     return get_atom(a).radius_pm + get_atom(b).radius_pm

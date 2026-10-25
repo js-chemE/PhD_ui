@@ -3,7 +3,8 @@ Draw atoms and bonds by the conventions of :mod:`phd_ui.colors.atoms`.
 
 Coordinates are data coordinates on an axes with an equal aspect ratio, in
 pm: place atoms at their real positions and the drawing comes out with true
-bond lengths and true relative sizes. Bonds go under the atoms (lower
+bond lengths. Atom sizes are the compressed radii of the atom convention
+(``Atom.drawn_pm``), so size differences are indicated, not to scale. Bonds go under the atoms (lower
 zorder), so they need no trimming at the atom edge.
 
 Line widths follow the active preset: the style widths are print widths and
@@ -14,11 +15,11 @@ the same 2x as everything else.
 
 import matplotlib.pyplot as plt
 import numpy as np
-from matplotlib.patches import Circle
+from matplotlib.patches import Circle, Polygon
 
 from phd_ui.colors.atoms import ATOMS, BALL_SCALE, BOND_STYLES, get_atom
 
-__all__ = ["draw_atom", "draw_bond", "draw_molecule"]
+__all__ = ["draw_atom", "draw_bond", "draw_molecule", "draw_projection", "save_spin_gif"]
 
 _PRINT_LINEWIDTH = 1.2
 _ATOM_Z = 3.0
@@ -53,8 +54,9 @@ def draw_atom(
     symbol : str
         Element symbol, a key of :data:`phd_ui.colors.ATOMS`.
     ball_scale : float, optional
-        Drawn radius as a fraction of the covalent radius. 0.5 (default) is
-        ball and stick; 1.0 is space-filling.
+        Drawn radius as a fraction of the compressed covalent radius
+        (``Atom.drawn_pm``). ``BALL_SCALE`` (0.38, default) is ball and stick; 1.0 is
+        space-filling.
     label : bool, optional
         If True, write the symbol inside. Only worth it for atoms of at
         least ``LABEL_MIN_DIAMETER_MM`` at final size; never done for H.
@@ -69,7 +71,7 @@ def draw_atom(
         The disc.
     """
     atom = get_atom(symbol)
-    disc = Circle((x, y), atom.radius_pm * ball_scale, facecolor=atom.fill, edgecolor=atom.edge,
+    disc = Circle((x, y), atom.drawn_pm * ball_scale, facecolor=atom.fill, edgecolor=atom.edge,
                   linewidth=0.6 * _scale(), zorder=zorder)
     ax.add_patch(disc)
     if label and symbol != "H":
@@ -125,7 +127,7 @@ def draw_bond(
     d = b - a
     normal = np.array([-d[1], d[0]]) / max(np.hypot(*d), 1e-12)
     if ends is not None:
-        gap = min(get_atom(e).radius_pm for e in ends) * ball_scale / 3
+        gap = min(get_atom(e).drawn_pm for e in ends) * ball_scale / 3
     else:
         gap = 12.0
     offsets = (np.arange(style.lines) - (style.lines - 1) / 2) * gap
@@ -145,6 +147,8 @@ def draw_molecule(
     *,
     ball_scale: float = BALL_SCALE,
     label: bool = False,
+    order: list[int] | None = None,
+    scale: list[float] | None = None,
 ) -> None:
     """
     Draw a whole molecule: bonds first, atoms on top.
@@ -162,6 +166,13 @@ def draw_molecule(
         As in :func:`draw_atom`.
     label : bool, optional
         Write the symbols inside the atoms, H excepted.
+    order : list of int, optional
+        Atom indices in drawing order, back to front, so a nearer atom
+        covers a farther one. ``phd_ui.structure.project`` returns it as
+        ``Projection.order``; by default the list order.
+    scale : list of float, optional
+        Radius factor per atom, ``Projection.scale`` (depth cue and
+        perspective); by default 1 for every atom.
 
     Examples
     --------
@@ -174,5 +185,112 @@ def draw_molecule(
         i, j = bond[0], bond[1]
         kind = bond[2] if len(bond) > 2 else "single"
         draw_bond(ax, atoms[i][1:], atoms[j][1:], kind, ends=(atoms[i][0], atoms[j][0]), ball_scale=ball_scale)
-    for symbol, x, y in atoms:
-        draw_atom(ax, x, y, symbol, ball_scale=ball_scale, label=label)
+    for n, i in enumerate(order if order is not None else range(len(atoms))):
+        symbol, x, y = atoms[i]
+        f = 1.0 if scale is None else float(scale[i])
+        draw_atom(ax, x, y, symbol, ball_scale=ball_scale * f, label=label, zorder=_ATOM_Z + n * 1e-3)
+
+
+def draw_projection(ax: plt.Axes, projection: object, *, x: float = 0.0, y: float = 0.0,
+                    look: object = None) -> object:
+    """
+    Draw a ``phd_ui.structure`` projection with matplotlib, as ``sketch.molecule`` does in SVG.
+
+    Parameters
+    ----------
+    ax : matplotlib.axes.Axes
+        Target axes, equal aspect, **limits already set**: widths in pt are
+        converted to data units with the current x limits.
+    projection : phd_ui.structure.Projection
+        From ``structure.project``, ``skeletal`` or ``spin``.
+    x, y : float, optional
+        Position of the projection's origin, pm (y up, as in the data).
+    look : phd_ui.structure.Look, optional
+        Appearance of every atom and bond; default ``Look()``.
+
+    Returns
+    -------
+    phd_ui.structure.Drawing
+        What was drawn, with atom positions and radii.
+    """
+    from phd_ui.structure import render
+
+    k = _scale()
+    x0, x1 = ax.get_xlim()
+    width_pt = ax.get_position().width * ax.figure.get_figwidth() * 72
+    drawing = render(projection, look, pm_per_pt=(x1 - x0) / width_pt * k if width_pt else 1.0)
+    for z, it in enumerate(drawing.items):
+        zo = 3.0 + z * 1e-3
+        if it.type == "circle":
+            ax.add_patch(Circle((x + it.cx, y + it.cy), it.r, facecolor=it.fill, edgecolor=it.stroke,
+                                linewidth=it.stroke_width_pt * k, alpha=it.opacity, zorder=zo,
+                                linestyle=(0, [v / it.stroke_width_pt for v in it.dash_pt]) if it.dash_pt else "solid"))
+        elif it.type == "line":
+            ls = (0, [v / it.width_pt for v in it.dash_pt]) if it.dash_pt else "solid"
+            ax.plot([x + it.x0, x + it.x1], [y + it.y0, y + it.y1], color=it.color, linewidth=it.width_pt * k,
+                    linestyle=ls, solid_capstyle=it.cap, dash_capstyle=it.cap, alpha=it.opacity, zorder=zo)
+        else:
+            ax.add_patch(Polygon([(x + px, y + py) for px, py in it.points], closed=True, facecolor=it.fill,
+                                 edgecolor="none", alpha=it.opacity, zorder=zo))
+    return drawing
+
+
+def save_spin_gif(frames: list, path: str, *, period_s: float = 6.0, size_cm: tuple[float, float] = (4.0, 4.5),
+                  dpi: int = 150, look: object = None) -> str:
+    """
+    Write a turning molecule as an animated GIF, with matplotlib only.
+
+    Parameters
+    ----------
+    frames : list of phd_ui.structure.Projection
+        From ``structure.spin``.
+    path : str or pathlib.Path
+        Output ``.gif``.
+    period_s : float, optional
+        Seconds per full turn.
+    size_cm : tuple of float, optional
+        Image size, cm.
+    dpi : int, optional
+        Resolution.
+    look : phd_ui.structure.Look, optional
+        Appearance.
+
+    Returns
+    -------
+    str
+        The path written.
+
+    Notes
+    -----
+    matplotlib's ``PillowWriter`` (Pillow ships with matplotlib), so it runs
+    wherever ``phd_ui`` does. Frames are opaque white with fixed limits
+    over the whole turn, so nothing jumps or piles up.
+    """
+    from matplotlib.animation import FuncAnimation, PillowWriter
+
+    from phd_ui.structure import render
+
+    boxes = np.array([render(f, look).bounds() for f in frames])
+    lo, hi = boxes[:, :2].min(axis=0), boxes[:, 2:].max(axis=0)
+    centre, half = (lo + hi) / 2, (hi - lo) / 2 * 1.08
+    ratio = size_cm[0] / size_cm[1]
+    half = np.array([max(half[0], half[1] * ratio), max(half[1], half[0] / ratio)])
+    rc = {"figure.constrained_layout.use": False, "savefig.bbox": None, "savefig.transparent": False,
+          "savefig.facecolor": "white", "figure.facecolor": "white"}
+    with plt.rc_context(rc):
+        fig = plt.figure(figsize=(size_cm[0] / 2.54, size_cm[1] / 2.54))
+        ax = fig.add_axes((0, 0, 1, 1))
+
+        def frame(n: int) -> list:
+            ax.clear()
+            ax.set_xlim(centre[0] - half[0], centre[0] + half[0])
+            ax.set_ylim(centre[1] - half[1], centre[1] + half[1])
+            ax.set_aspect("equal")
+            ax.axis("off")
+            draw_projection(ax, frames[n], look=look)
+            return []
+
+        FuncAnimation(fig, frame, frames=len(frames)).save(str(path), writer=PillowWriter(fps=len(frames) / period_s),
+                                                          dpi=dpi)
+    plt.close(fig)
+    return str(path)
