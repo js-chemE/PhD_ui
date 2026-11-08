@@ -17,7 +17,7 @@ from phd_ui.colors.scheme import (
     get_family,
 )
 from phd_ui.colors.manipulation import adjust_saturation, create_saturation_palette, hex_to_rgb, rgb_to_hex
-from phd_ui.colors.cmaps import create_colormap_from_color, create_colormap_from_cmap, value_to_color
+from phd_ui.colors.cmaps import create_colormap_from_color, create_colormap_from_cmap, create_diverging_colormap, value_to_color
 from phd_ui.colors.nature import (
     NATURE,
     NATURE_ACCENT_STEP,
@@ -115,5 +115,6 @@ __all__ = [
     "rgb_to_hex",
     "create_colormap_from_color",
     "create_colormap_from_cmap",
+    "create_diverging_colormap",
     "value_to_color"
     ]

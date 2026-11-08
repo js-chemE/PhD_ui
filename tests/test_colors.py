@@ -216,3 +216,15 @@ def test_h2_and_ch4_stay_apart():
     h2, ch4 = colors.SPECIES["H2"].color, colors.SPECIES["CH4"].color
     assert _contrast_on_white(h2) >= 3.0
     assert _relative_luminance(h2) / _relative_luminance(ch4) > 2.5
+
+
+def test_create_diverging_colormap():
+    from matplotlib.colors import to_rgb
+    from phd_ui.colors import create_diverging_colormap
+    cmap = create_diverging_colormap("#1e485c", "#d95544", number=101)
+    lo, mid_lo, mid_hi, hi = cmap(0.0)[:3], cmap(0.4)[:3], cmap(0.6)[:3], cmap(1.0)[:3]
+    assert sum(lo) < sum(to_rgb("#1e485c"))          # darkened end
+    assert sum(hi) < sum(to_rgb("#d95544"))
+    assert sum(mid_lo) > sum(to_rgb("#1e485c")) and mid_lo[2] > mid_lo[0]   # light, still blue
+    assert sum(mid_hi) > sum(to_rgb("#d95544")) and mid_hi[0] > mid_hi[2]   # light, still red
+    assert len(create_diverging_colormap("#000000", "#ffffff", number=5, as_hex=True)) == 5

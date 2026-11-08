@@ -57,6 +57,17 @@ BASE_WIDTH = 0.8
 # 18-24 pt slide body text, and restores print-equivalent legibility at ~5 m.
 SLIDE_SCALE = 2.0
 
+# Slide multiplier for line widths only (data lines, axes, ticks, grid). Set
+# 2026-10-26: 2x keeps lines at their print weight relative to the canvas, which
+# projectors and viewing distance thin out more than text, so slides get 2.5x.
+# Text, marker sizes, tick lengths and pads stay at `SLIDE_SCALE`.
+SLIDE_LINE_SCALE = 2.5
+
+# Slide multiplier for the frame: axes spines, tick widths, grid. Set 2026-10-26
+# after the first 2.5x slides: heavy spines did not help, so the frame keeps its
+# print width while data lines (`SLIDE_LINE_SCALE`) and text (`SLIDE_SCALE`) grow.
+SLIDE_FRAME_SCALE = 1.0
+
 DEFAULT_SCALE = 1.0
 
 # Rim left around the figure by `savefig`, in inches at scale 1. Small enough to
@@ -69,6 +80,22 @@ SAVEFIG_PAD_IN = 0.08
 SCALE_BY_PREFIX: Dict[str, float] = {
     "slide": SLIDE_SCALE,
 }
+
+# Figure-size key prefix -> line-width scale. Keys not listed get `DEFAULT_SCALE`.
+LINE_SCALE_BY_PREFIX: Dict[str, float] = {
+    "slide": SLIDE_LINE_SCALE,
+}
+
+# Figure-size key prefix -> frame-width scale. Keys not listed get `DEFAULT_SCALE`.
+FRAME_SCALE_BY_PREFIX: Dict[str, float] = {
+    "slide": SLIDE_FRAME_SCALE,
+}
+
+
+def frame_scale_for_key(key: str) -> float:
+    """Scale factor for spines, tick widths and grid of a figure-size key (1 for slides too)."""
+    prefix = key.split("_", 1)[0]
+    return FRAME_SCALE_BY_PREFIX.get(prefix, DEFAULT_SCALE)
 
 
 def scale_for_key(key: str) -> float:
@@ -88,7 +115,27 @@ def scale_for_key(key: str) -> float:
     return SCALE_BY_PREFIX.get(prefix, DEFAULT_SCALE)
 
 
-def get_params(scale: float = DEFAULT_SCALE) -> Dict[str, Any]:
+def line_scale_for_key(key: str) -> float:
+    """Line-width scale factor belonging to a figure-size key.
+
+    Parameters
+    ----------
+    key : str
+        A key from the figure-size table, e.g. `'double'` or `'slide_full'`.
+
+    Returns
+    -------
+    float
+        `SLIDE_LINE_SCALE` for `slide_*` keys, `DEFAULT_SCALE` otherwise.
+        Multiply a hardcoded `lw=` by this, a hardcoded `ms=` or `fontsize`
+        by `scale_for_key`.
+    """
+    prefix = key.split("_", 1)[0]
+    return LINE_SCALE_BY_PREFIX.get(prefix, DEFAULT_SCALE)
+
+
+def get_params(scale: float = DEFAULT_SCALE, line_scale: float | None = None,
+               frame_scale: float | None = None) -> Dict[str, Any]:
     """Build a full rcParams dict at a given scale.
 
     Parameters
@@ -109,9 +156,22 @@ def get_params(scale: float = DEFAULT_SCALE) -> Dict[str, Any]:
     >>> plt.rcParams.update(get_params(SLIDE_SCALE))
     """
 
+    if line_scale is None:
+        line_scale = scale
+    if frame_scale is None:
+        frame_scale = line_scale
+
     def pt(value: float) -> float:
         """Scale a point-valued setting, rounded to something readable in a repr."""
         return round(value * scale, 2)
+
+    def lw(value: float) -> float:
+        """Scale a line width (own factor on slides, see `SLIDE_LINE_SCALE`)."""
+        return round(value * line_scale, 2)
+
+    def fw(value: float) -> float:
+        """Scale a frame width: spines, ticks, grid (see `SLIDE_FRAME_SCALE`)."""
+        return round(value * frame_scale, 2)
 
     return {
         # ----------------------------------------------------
@@ -143,7 +203,7 @@ def get_params(scale: float = DEFAULT_SCALE) -> Dict[str, Any]:
         # ----------------------------------------------------
         # lines
         # ----------------------------------------------------
-        "lines.linewidth": pt(1.2),
+        "lines.linewidth": lw(1.2),
         "lines.markersize": pt(4),
         # Series colours: the scheme's line tones, see phd_ui.colors.scheme.
         "axes.prop_cycle": cycler(color=SCHEME_LINE),
@@ -151,7 +211,7 @@ def get_params(scale: float = DEFAULT_SCALE) -> Dict[str, Any]:
         # ----------------------------------------------------
         # axes
         # ----------------------------------------------------
-        "axes.linewidth": pt(BASE_WIDTH),
+        "axes.linewidth": fw(BASE_WIDTH),
         "axes.titlesize": pt(9.5),  # slightly reduced -> matches font metrics
         "axes.labelsize": pt(9),
         "axes.labelpad": pt(8),  # tighter, avoids wasted vertical space
@@ -172,11 +232,11 @@ def get_params(scale: float = DEFAULT_SCALE) -> Dict[str, Any]:
         "xtick.minor.size": pt(1.5),
         "ytick.minor.size": pt(1.5),
 
-        "xtick.major.width": pt(BASE_WIDTH),
-        "ytick.major.width": pt(BASE_WIDTH),
+        "xtick.major.width": fw(BASE_WIDTH),
+        "ytick.major.width": fw(BASE_WIDTH),
 
-        "xtick.minor.width": pt(BASE_WIDTH),
-        "ytick.minor.width": pt(BASE_WIDTH),
+        "xtick.minor.width": fw(BASE_WIDTH),
+        "ytick.minor.width": fw(BASE_WIDTH),
 
         "xtick.major.pad": pt(3),
         "ytick.major.pad": pt(3),
@@ -193,7 +253,7 @@ def get_params(scale: float = DEFAULT_SCALE) -> Dict[str, Any]:
         "axes.grid": False,
         "grid.color": "0.5",  # neutral gray, print-safe
         "grid.alpha": 0.2,
-        "grid.linewidth": pt(0.4),
+        "grid.linewidth": fw(0.4),
 
         # ----------------------------------------------------
         # legend

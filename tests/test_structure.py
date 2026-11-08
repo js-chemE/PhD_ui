@@ -177,6 +177,34 @@ def test_export_writes_every_format(tmp_path):
     assert sorted(f.suffix for f in spin) == [".gif", ".svg"]
 
 
+def test_export_letters_writes_one_symbol_per_atom(tmp_path):
+    import phd_ui as ui
+    from phd_ui.colors import ATOMS
+    ui.initialize()
+    st.export(st.view("formate", "flat"), tmp_path, "f", formats=("svg",), letters=True)
+    ns = "{http://www.w3.org/2000/svg}"
+    texts = [t for t in ET.parse(tmp_path / "f.svg").getroot().iter(ns + "text")]
+    assert sorted(t.text for t in texts) == ["C", "H", "O", "O"]
+    h = next(t for t in texts if t.text == "H")
+    assert f"fill:{ATOMS['H'].text}" in h.get("style")
+    st.export(st.view("formate", "flat"), tmp_path, "g", formats=("svg",))
+    assert not list(ET.parse(tmp_path / "g.svg").getroot().iter(ns + "text"))
+
+
+def test_new_library_geometries_match_their_sources():
+    co2, h2, co3 = st.load("carbon_dioxide"), st.load("hydrogen"), st.load("carbonate")
+    hcoo, cooo, meo = st.load("formate"), st.load("carboxylate"), st.load("methoxy")
+    assert co2.distance("C1", "O2") == pytest.approx(116.00, abs=0.01) and co2.angle("O2", "C1", "O3") == pytest.approx(180, abs=0.01)
+    assert h2.distance("H1", "H2") == pytest.approx(74.144, abs=0.01)
+    assert co3.distance("C1", "O3") == pytest.approx(128.15, abs=0.01) and co3.angle("O2", "C1", "O3") == pytest.approx(120, abs=0.01)
+    assert hcoo.distance("C1", "O3") == pytest.approx(124.6, abs=0.01) and hcoo.angle("O3", "C1", "O4") == pytest.approx(126.3, abs=0.01)
+    assert cooo.distance("C1", "O2") == pytest.approx(124.0, abs=0.01) and cooo.angle("O2", "C1", "O3") == pytest.approx(138.0, abs=0.01)
+    cooh = st.load("carboxyl")
+    assert cooh.distance("C1", "O2") == pytest.approx(118.0, abs=0.01) and cooh.distance("C1", "O3") == pytest.approx(134.6, abs=0.01)
+    assert cooh.angle("O2", "C1", "O3") == pytest.approx(127.1, abs=0.01) and abs(cooh.dihedral("H4", "O3", "C1", "O2")) == pytest.approx(180, abs=0.01)
+    assert meo.distance("C1", "O2") == pytest.approx(140.5, abs=0.01) and meo.angle("H3", "C1", "O2") == pytest.approx(111.3, abs=0.02)
+
+
 def test_glb_is_valid_gltf_with_one_node_per_atom_and_bond_line(tmp_path):
     import struct
     path = st.export_glb(st.view("formaldehyde", "upright"), tmp_path / "f.glb",

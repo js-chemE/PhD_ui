@@ -27,7 +27,7 @@ _BOND_Z = 2.0
 
 
 def _scale() -> float:
-    """Preset scale, read off the active line width."""
+    """Line-width scale of the active preset, read off the active line width (2.5 on slides, see SLIDE_LINE_SCALE)."""
     return plt.rcParams["lines.linewidth"] / _PRINT_LINEWIDTH
 
 

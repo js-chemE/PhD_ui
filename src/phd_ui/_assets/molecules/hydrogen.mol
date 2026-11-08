@@ -1,0 +1,8 @@
+hydrogen H2, experimental re 0.74144 A (X 1Sigma g+); NIST Chemistry WebBook, constants of diatomic molecules (Huber & Herzberg 1979)
+  phd_ui
+
+  2  1  0  0  0  0  0  0  0  0999 V2000
+    0.0000    0.0000    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0
+    0.7414    0.0000    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0
+M  END

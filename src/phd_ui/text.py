@@ -32,7 +32,7 @@ def cite(
         Surname of the first author, with its particles, e.g.
         ``"Vico van Berkel"``.
     journal : str
-        Journal abbreviation as Zotero gives it (ISO 4, with dots), e.g.
+        Journal abbreviation as Zotero gives it (ISO 4, punctuation included), e.g.
         ``"J. Catal."``.
     year : int or str
         Year of publication.

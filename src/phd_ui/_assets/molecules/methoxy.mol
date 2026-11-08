@@ -1,0 +1,14 @@
+methoxy CH3O, C3v, A; rCO 1.405, rCH 1.112, HCO 111.3 deg; NIST CCCBDB lists these as experimental, but their source is a calculation: Jackels, J. Chem. Phys. 1982, 76, 505
+  phd_ui
+
+  5  4  0  0  0  0  0  0  0  0999 V2000
+    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0000    0.0000    1.4050 O   0  0  0  0  0  0  0  0  0  0  0  0
+    1.0360    0.0000   -0.4039 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.5180    0.8972   -0.4039 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.5180   -0.8972   -0.4039 H   0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0
+  1  3  1  0
+  1  4  1  0
+  1  5  1  0
+M  END

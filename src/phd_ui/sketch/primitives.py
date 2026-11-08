@@ -475,20 +475,20 @@ def molecule(group: Group, projection: object, x: float = 0.0, y: float = 0.0,
         attrs = {"id": scene._unique_id(f"{g.id}.{it.id}")}
         if it.type == "circle":
             attrs.update({"class": f"atom-{it.element}", "cx": _num(x + it.cx), "cy": _num(y - it.cy),
-                          "r": _num(it.r - scene.pt(it.stroke_width_pt) / 2), "fill": it.fill, "stroke": it.stroke,
-                          "stroke-width": _num(scene.pt(it.stroke_width_pt))})
+                          "r": _num(it.r - scene.lw(it.stroke_width_pt) / 2), "fill": it.fill, "stroke": it.stroke,
+                          "stroke-width": _num(scene.lw(it.stroke_width_pt))})
             dash = it.dash_pt
         elif it.type == "line":
             attrs.update({"class": f"bond-{it.kind}", "x1": _num(x + it.x0), "y1": _num(y - it.y0),
                           "x2": _num(x + it.x1), "y2": _num(y - it.y1), "stroke": it.color,
-                          "stroke-width": _num(scene.pt(it.width_pt)), "stroke-linecap": it.cap})
+                          "stroke-width": _num(scene.lw(it.width_pt)), "stroke-linecap": it.cap})
             dash = it.dash_pt
         else:
             attrs.update({"class": f"bond-{it.kind}", "fill": it.fill,
                           "points": " ".join(f"{_num(x + px)},{_num(y - py)}" for px, py in it.points)})
             dash = ()
         if dash:
-            attrs["stroke-dasharray"] = " ".join(_num(scene.pt(v)) for v in dash)
+            attrs["stroke-dasharray"] = " ".join(_num(scene.lw(v)) for v in dash)
         if it.opacity < 1:
             attrs["opacity"] = _num(it.opacity) if it.opacity >= 0.1 else f"{it.opacity:.2f}"
         g.add(it.type, attrs)

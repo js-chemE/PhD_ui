@@ -1,0 +1,10 @@
+carbon dioxide CO2, linear (Dinfh), experimental re 1.1600 A (1.159959(1)); Graner, Rossetti & Bailly, Mol. Phys. 1986, 58, 627
+  phd_ui
+
+  3  2  0  0  0  0  0  0  0  0999 V2000
+    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    1.1600    0.0000    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0
+   -1.1600    0.0000    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0
+  1  3  2  0
+M  END

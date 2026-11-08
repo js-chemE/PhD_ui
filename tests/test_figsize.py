@@ -92,9 +92,14 @@ def test_slide_widths_are_the_body_box_and_its_half():
     body_width, body_height = SLIDE_BODY
     widths = {
         w for k, (w, _) in table.items()
-        if k.startswith("slide") and k != "slide_full_16x9"
+        if k.startswith("slide") and k not in ("slide_full_16x9", "slide_third", "slide_two_thirds", "slide_two_thirds_short")
     }
     assert widths == {body_width, body_height}
+    # one of three side by side: the body width less two 1 cm gaps, in thirds
+    assert get_figsize("slide_third", in_metric=True)[0] == pytest.approx((body_width - 2) / 3, abs=0.2)
+    # two of three: two thirds plus the gap between them, text in the remaining third
+    assert get_figsize("slide_two_thirds", in_metric=True)[0] == pytest.approx(2 * (body_width - 2) / 3 + 1, abs=0.2)
+    assert get_figsize("slide_two_thirds_short", in_metric=True) == (get_figsize("slide_two_thirds", in_metric=True)[0], body_height / 2)
     assert get_figsize("slide_square", in_metric=True) == (body_height, body_height)
     assert get_figsize("slide_full", in_metric=True) == SLIDE_BODY
 

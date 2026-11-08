@@ -25,6 +25,22 @@
    "rotate": 90,
    "turn": -30,
    "tip": -20
+  },
+  "leaning": {
+   "plane": [
+    "C1",
+    "O2",
+    "H6"
+   ],
+   "rotate": 90,
+   "turn": -30,
+   "tip": -20,
+   "rotations": [
+    [
+     "z",
+     -12
+    ]
+   ]
   }
  },
  "methane": {
@@ -120,6 +136,90 @@
    ],
    "turn": 30,
    "tip": 15
+  }
+ },
+ "carbon_dioxide": {
+  "flat": {
+   "plane": [
+    "C1",
+    "O2"
+   ]
+  }
+ },
+ "hydrogen": {
+  "flat": {
+   "plane": [
+    "H1",
+    "H2"
+   ]
+  }
+ },
+ "carbonate": {
+  "flat": {
+   "plane": [
+    "C1",
+    "O2",
+    "O3"
+   ],
+   "rotate": 90
+  }
+ },
+ "formate": {
+  "flat": {
+   "plane": [
+    "C1",
+    "H2",
+    "O3"
+   ],
+   "rotate": 90
+  }
+ },
+ "carboxylate": {
+  "flat": {
+   "plane": [
+    "C1",
+    "O2",
+    "O3"
+   ],
+   "rotate": 201
+  }
+ },
+ "methoxy": {
+  "upright": {
+   "plane": [
+    "C1",
+    "O2",
+    "H3"
+   ],
+   "rotate": -90,
+   "turn": -30,
+   "tip": 30
+  },
+  "leaning": {
+   "plane": [
+    "C1",
+    "O2",
+    "H3"
+   ],
+   "rotate": -90,
+   "turn": -30,
+   "tip": 30,
+   "rotations": [
+    [
+     "z",
+     -12
+    ]
+   ]
+  }
+ },
+ "carboxyl": {
+  "flat": {
+   "plane": [
+    "C1",
+    "O2",
+    "O3"
+   ],
+   "rotate": 26.450000000000003
   }
  }
 }

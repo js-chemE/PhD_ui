@@ -24,6 +24,26 @@ __all__ = ["export", "export_spin"]
 
 _MM_PER_PT = 25.4 / 72
 
+#: Font size of an element symbol written inside its atom, as a multiple of
+#: the drawn radius: one letter fills the disc a little more than two.
+_SYMBOL_SIZE = {1: 1.5, 2: 1.1}
+#: Baseline of the symbol below the atom centre, as a fraction of the font
+#: size, so a capital sits centred in the disc.
+_SYMBOL_DROP = 0.34
+
+
+def _symbols(drawing, look: Look | None = None) -> list[tuple[str, float, float, float, str]]:
+    """``(symbol, x, y_centre, font size, colour)`` per atom, pm, y up; colour from the look (``Atom.text`` by default)."""
+    look = look or Look()
+    out = []
+    for item in drawing.items:
+        el = getattr(item, "element", None)
+        if el is None or not hasattr(item, "r"):
+            continue
+        size = item.r * _SYMBOL_SIZE.get(len(el), 0.9)
+        out.append((el, item.cx, item.cy, size, look.atom(el, item.id).text))
+    return out
+
 
 def _box(drawings: list, pad_mm: float, pm_per_mm: float) -> tuple[float, float, float, float]:
     xs0, ys0, xs1, ys1 = zip(*(d.bounds() for d in drawings))
@@ -32,7 +52,8 @@ def _box(drawings: list, pad_mm: float, pm_per_mm: float) -> tuple[float, float,
 
 
 def export(p: Projection, directory: str | Path, name: str, formats: Sequence[str] = ("svg", "png", "pdf"),
-           look: Look | None = None, pm_per_mm: float = 11.0, pad_mm: float = 1.5, dpi: int = 300) -> list[Path]:
+           look: Look | None = None, pm_per_mm: float = 11.0, pad_mm: float = 1.5, dpi: int = 300,
+           letters: bool = False) -> list[Path]:
     """
     Write one view of a molecule in several formats, at its natural size.
 
@@ -54,6 +75,11 @@ def export(p: Projection, directory: str | Path, name: str, formats: Sequence[st
         Margin around the atoms.
     dpi : int, optional
         PNG resolution.
+    letters : bool, optional
+        Write each element symbol inside its atom, H included, in
+        ``Atom.text`` (as the IR-bands atlas does). At the default scale of
+        11 pm per mm even H is about 4 mm across, the size the atom
+        convention asks for before a symbol goes inside.
 
     Returns
     -------
@@ -72,13 +98,21 @@ def export(p: Projection, directory: str | Path, name: str, formats: Sequence[st
     out = []
     if "svg" in formats:
         scene = sk.Scene(w_mm, h_mm, pm_per_mm=pm_per_mm, title=name, source="phd_ui.structure.export")
-        sk.molecule(scene.layer(name), p, -x0, y1, name=name, look=look)
+        layer = scene.layer(name)
+        sk.molecule(layer, p, -x0, y1, name=name, look=look)
+        if letters:
+            g = layer.group("symbols")
+            for el, x, y, size, colour in _symbols(render(p, look, pm_per_pt), look):
+                g.add("text", {"x": f"{x - x0:.1f}", "y": f"{y1 - y + _SYMBOL_DROP * size:.1f}",
+                               "text-anchor": "middle",
+                               "style": f"font-size:{size:.1f}px;font-weight:600;fill:{colour}"}, text=el)
         out.append(scene.save(directory, name))
     raster = [f for f in ("png", "pdf") if f in formats]
     if raster:
         from phd_ui.plotting.molecule import draw_projection
 
-        rc = {"figure.constrained_layout.use": False, "savefig.bbox": None, "savefig.transparent": True}
+        rc = {"figure.constrained_layout.use": False, "savefig.bbox": None, "savefig.transparent": True,
+              "pdf.fonttype": 42}   # TrueType in the PDF, so Illustrator keeps the symbols as editable text
         with plt.rc_context(rc):
             fig = plt.figure(figsize=(w_mm / 25.4, h_mm / 25.4))
             ax = fig.add_axes((0, 0, 1, 1))
@@ -87,6 +121,10 @@ def export(p: Projection, directory: str | Path, name: str, formats: Sequence[st
             ax.set_aspect("equal")
             ax.axis("off")
             draw_projection(ax, p, look=look)
+            if letters:
+                for el, x, y, size, colour in _symbols(render(p, look, pm_per_pt), look):
+                    ax.text(x, y - _SYMBOL_DROP * size, el, ha="center", va="baseline", color=colour,
+                            fontsize=size / pm_per_pt, fontweight=600, zorder=10)
             for f in raster:
                 path = directory / f"{name}.{f}"
                 fig.savefig(path, dpi=dpi)

@@ -529,4 +529,5 @@ def draw_curve_label(
         gap = np.abs(arclength - arclength[index]) < half
         line.set_data(np.where(gap, np.nan, x), np.where(gap, np.nan, y))
 
+    txt.set_gid("curve-label")
     return txt

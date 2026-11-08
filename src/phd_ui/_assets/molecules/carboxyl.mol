@@ -1,0 +1,12 @@
+carboxyl HOCO (COOH), trans, planar (Cs), A; experimental r0: HO 0.962(19), OC 1.346(11), C=O 1.180(11), HOC 107.5(14), OCO 127.1(3) deg; McCarthy et al., J. Chem. Phys. 2016, 144, 124304 (rotational spectroscopy)
+  phd_ui
+
+  4  3  0  0  0  0  0  0  0  0999 V2000
+    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    1.1800    0.0000    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.8119    1.0735    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0
+   -1.7182    0.7508    0.0000 H   0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0
+  1  3  1  0
+  3  4  1  0
+M  END

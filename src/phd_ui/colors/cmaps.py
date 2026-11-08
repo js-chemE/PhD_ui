@@ -134,6 +134,63 @@ def create_colormap_from_cmap(cmap: Union[str, Colormap],
     return _finalize([tuple(c) for c in colors], f"{name}_truncated", as_hex)
 
 
+def create_diverging_colormap(low: str,
+                              high: str,
+                              light: float = 0.75,
+                              darken: float = 0.35,
+                              number: int = 256,
+                              name: str = "diverging",
+                              as_hex: bool = False) -> Union[list[str], LinearSegmentedColormap]:
+    """
+    Build a diverging colormap between two colours: dark ends, light middle.
+
+    The stops, evenly spaced from 0 to 1, are `low` darkened, `low`, `low`
+    tinted towards white, `high` tinted towards white, `high`, and `high`
+    darkened. Both halves keep their own hue up to the middle, so the curves
+    near the centre stay visible and still say which side they belong to (no
+    white or grey midpoint). Made for phase-resolved spectra drawn from 0 to
+    180 deg, in the style of Al Abdulghani et al. (Hermans), J. Am. Chem.
+    Soc. 2025, Figure 1b, but with any pair of colours.
+
+    Parameters
+    ----------
+    low, high : str
+        Colours at 0 and 1 (hex or any matplotlib colour), before darkening.
+    light : float, optional
+        Tint of the two middle stops, as the fraction mixed towards white
+        (0 = the colour itself, 1 = white).
+    darken : float, optional
+        Fraction mixed towards black at the two ends (0 = no darkening).
+    number : int, optional
+        Number of colours (must be >= 2).
+    name : str, optional
+        Name of the colormap.
+    as_hex : bool, optional
+        If True, return a list of hex colors instead of a colormap.
+
+    Returns
+    -------
+    list[str] or LinearSegmentedColormap
+        Hex colors if `as_hex` is True, otherwise a colormap.
+
+    Raises
+    ------
+    ValueError
+        If `number` is less than 2, or `light` or `darken` lies outside
+        ``[0, 1)``.
+    """
+    if number < 2:
+        raise ValueError("number must be >= 2")
+    if not (0.0 <= light < 1.0 and 0.0 <= darken < 1.0):
+        raise ValueError("light and darken must lie in [0, 1)")
+
+    lo, hi = np.array(to_rgb(low)), np.array(to_rgb(high))
+    stops = [lo * (1 - darken), lo, lo + (1 - lo) * light, hi + (1 - hi) * light, hi, hi * (1 - darken)]
+    ramp = LinearSegmentedColormap.from_list(name, [tuple(c) for c in stops])
+    colors = ramp(np.linspace(0.0, 1.0, number))[:, :3]
+    return _finalize([tuple(c) for c in colors], name, as_hex)
+
+
 def value_to_color(value: Union[float, Iterable[float], np.ndarray],
                    cmap: Union[str, Colormap],
                    vmin: float = 0.0,

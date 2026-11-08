@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 from matplotlib.axes import Axes
 from typing import Any
-from phd_ui.plotting.params import BASE_PARAMS, get_params, scale_for_key
+from phd_ui.plotting.params import BASE_PARAMS, frame_scale_for_key, get_params, line_scale_for_key, scale_for_key
 from phd_ui.plotting.figsize import get_figsizes
 import numpy as np
 
@@ -10,11 +10,14 @@ from matplotlib.ticker import AutoMinorLocator, MultipleLocator
 
 FIGSIZE = get_figsizes()  # inches, matching matplotlib's `figure.figsize`
 
+ACTIVE_KEY: str | None = None
+"""Figure-size key of the preset last applied by `update_params_string`; `save_figure` reads it."""
+
 # Each preset carries both its size and the point sizes that suit the medium
 # it is for: `slide_*` keys come out at 2x, everything else at print scale.
 # See `params.py` for why one point size cannot serve both.
 PARAMS = {
-    key: {**get_params(scale_for_key(key)), "figure.figsize": FIGSIZE[key]}
+    key: {**get_params(scale_for_key(key), line_scale_for_key(key), frame_scale_for_key(key)), "figure.figsize": FIGSIZE[key]}
     for key in FIGSIZE.keys()
 }
 
@@ -55,8 +58,10 @@ def update_params_string(params: str, **kwargs: Any) -> None:
     """
     # Copy first: mutating `PARAMS[params]` would leak the override into every
     # later call that asks for the same preset.
+    global ACTIVE_KEY
     params_dict = {**PARAMS[params], **kwargs}
     update_params(params_dict)
+    ACTIVE_KEY = params
 
 
 def set_locators(ax: plt.Axes, *, minor_x: int = 2, minor_y: int = 2, major_x: int | float | None = None, major_y: int | float | None = None) -> None:

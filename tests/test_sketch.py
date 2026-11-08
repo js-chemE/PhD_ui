@@ -188,3 +188,18 @@ def test_nearest_lands_on_a_drawn_atom():
     placed = sk.slab(panel.part("support"), ("Ga", "O"), 0, 2000, 1000, 500, omit=[(0, 3)])
     x, y = placed.nearest(700, symbol="Ga")
     assert ("Ga", x, y) in {(s, a, b) for s, a, b, r, _ in placed.atoms if r == 0}
+
+
+def test_atom_colour_override_is_per_scene():
+    from dataclasses import replace
+    from phd_ui.colors.scheme import BLUE
+    blue_ga = replace(ATOMS["Ga"], fill=BLUE.base, edge=BLUE.dark, light=BLUE.light)
+    scene = sk.Scene(10, 10, atoms={"Ga": blue_ga})
+    panel = scene.panel("p", 0, 0, 500, 500)
+    panel.part("support").atom("Ga", 100, 100)
+    css = scene.to_string()
+    assert f"fill:{BLUE.base}" in css and ATOMS["Ga"].fill not in css
+    assert scene.radius("Ga") == pytest.approx(ATOMS["Ga"].drawn_pm)     # radius untouched
+    other = sk.Scene(10, 10)
+    other.panel("p", 0, 0, 500, 500).part("support").atom("Ga", 100, 100)
+    assert ATOMS["Ga"].fill in other.to_string()                          # default unchanged elsewhere

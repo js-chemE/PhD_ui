@@ -52,6 +52,9 @@ class AtomLook:
         here, or any value.
     radius_factor : float
         Multiplier on the drawn radius after everything else.
+    text : str
+        Colour of the element symbol written inside the atom
+        (``export(..., letters=True)``); ``None`` keeps ``Atom.text``.
     """
 
     fill: str | None = None
@@ -61,6 +64,7 @@ class AtomLook:
     opacity: float | None = None
     radius_pm: float | None = None
     radius_factor: float | None = None
+    text: str | None = None
 
 
 @dataclass(frozen=True)
@@ -158,7 +162,7 @@ class Look:
         """The resolved look of one atom, every field set."""
         a = get_atom(symbol)
         ion = {get_ion(k).symbol: get_ion(k).radius_pm for k in self.ions}.get(symbol)
-        base = AtomLook(a.fill, a.edge, 0.6, (), 1.0, ion if ion is not None else a.radius_pm, 1.0)
+        base = AtomLook(a.fill, a.edge, 0.6, (), 1.0, ion if ion is not None else a.radius_pm, 1.0, a.text)
         return _merge(base, self.elements.get(symbol), self.atoms.get(label))
 
     def radius(self, symbol: str, label: str, factor: float = 1.0) -> float:

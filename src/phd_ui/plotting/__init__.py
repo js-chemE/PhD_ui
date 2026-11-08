@@ -12,7 +12,8 @@ from phd_ui.plotting.draw import draw_peak, draw_vscale, draw_colorbar, draw_cur
 from phd_ui.plotting.grid import panel_grid, panel_mosaic
 from phd_ui.plotting.molecule import draw_atom, draw_bond, draw_molecule, draw_projection, save_spin_gif
 from phd_ui.plotting.matrix import Block, Equation, Stripe, Term, draw_matrix, draw_matrix_equation
-from phd_ui.plotting.params import BASE_PARAMS, SLIDE_SCALE, get_params, scale_for_key
+from phd_ui.plotting.params import BASE_PARAMS, SLIDE_FRAME_SCALE, SLIDE_LINE_SCALE, SLIDE_SCALE, frame_scale_for_key, get_params, line_scale_for_key, scale_for_key
+from phd_ui.plotting.layout import check_layout, component, nice_ticks, panel_label, slide_ticks
 
 
 __all__ = [
@@ -20,6 +21,15 @@ __all__ = [
     "update_params_string",
     "get_params",
     "scale_for_key",
+    "line_scale_for_key",
+    "frame_scale_for_key",
+    "SLIDE_FRAME_SCALE",
+    "check_layout",
+    "nice_ticks",
+    "panel_label",
+    "component",
+    "slide_ticks",
+    "SLIDE_LINE_SCALE",
     "BASE_PARAMS",
     "SLIDE_SCALE",
     "PARAMS",

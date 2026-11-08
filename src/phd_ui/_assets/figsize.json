@@ -15,6 +15,9 @@
     "slide": [31, 10],
     "slide_full": [31, 14.5],
     "slide_half": [14.5, 10],
+    "slide_third": [9.5, 10],
     "slide_square": [14.5, 14.5],
+    "slide_two_thirds": [20.3, 14.5],
+    "slide_two_thirds_short": [20.3, 7.25],
     "slide_full_16x9": [33.87, 19.05]
 }

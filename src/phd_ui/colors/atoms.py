@@ -14,6 +14,15 @@ Atoms
   scheme has the hue, the scheme tone is used outright (O is ``RED.line``,
   P is ``ORANGE.line``, C is ``GREY.darkest``, the generic metal M is
   ``GREY.base``, H is ``SAND.light``).
+- **Ga is the one exception to CPK: sky blue** (``#69c5ff``, from the
+  cartoons of Al Abdulghani et al. (Hermans), J. Am. Chem. Soc. 2025; the
+  Copéret group draws Ga blue as well, Hansen et al., Acc. Chem. Res. 2025).
+  The CPK/Jmol pink (``#c28f8f``, here ``#be7e7f`` until 2026-11-04) sat
+  between red O and orange Cu and separated from O mostly by lightness, so
+  a GaOx-on-Cu sketch was all reds. Edge and light are derived like those of
+  the other atoms, in OKLCH from the fill: edge 0.22 darker at 0.8 of the
+  chroma, light 0.16 lighter, which keeps the hue but only 0.22 of the
+  chroma there, the most sRGB allows at that lightness (0.55 elsewhere).
 - **Carbon is a dark grey, not black.** Black reads as a hole in a flat
   drawing and swallows the bonds drawn into it; ``GREY.darkest`` keeps C
   the darkest atom while the ink-coloured bonds stay visible against it.
@@ -193,7 +202,7 @@ ATOMS: dict[str, Atom] = {a.symbol: a for a in (
     Atom("Ni", "nickel",    "#6ca26a",    "#365e34", "#b0ceae", _WHITE_TEXT, 124),
     Atom("Cu", "copper",    "#bb731e",    "#683b02", "#d8ae88", _WHITE_TEXT, 132),
     Atom("Zn", "zinc",      "#797caa",    "#3d3f60", "#adafca", _WHITE_TEXT, 122),
-    Atom("Ga", "gallium",   "#be7e7f",    "#724445", "#dfb9b9", _DARK_TEXT,  122),
+    Atom("Ga", "gallium",   "#69c5ff",    "#387faa", "#dff1ff", _DARK_TEXT,  122),
     Atom("Pd", "palladium", "#2b738b",    "#013343", "#7c9fad", _WHITE_TEXT, 139),
     Atom("In", "indium",    "#a06a68",    "#573130", "#c2a2a0", _WHITE_TEXT, 142),
     Atom("Pt", "platinum",  "#a9a9ba",    "#686774", "#dddde7", _DARK_TEXT,  136),

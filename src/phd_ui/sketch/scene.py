@@ -41,7 +41,7 @@ from pathlib import Path
 
 from collections.abc import Iterable
 
-from phd_ui.colors.atoms import SIZE_EXPONENT, drawn_radius_pm, get_atom, get_ion
+from phd_ui.colors.atoms import SIZE_EXPONENT, Atom, drawn_radius_pm, get_atom, get_ion
 from phd_ui.colors.scheme import BLUE, GREY, INK
 
 __all__ = [
@@ -271,6 +271,10 @@ class Scene:
         Multiplier on every point size (text, line widths, dashes): 1 for
         print, ``SLIDE_SCALE`` (2) for slides. :meth:`from_figsize` sets it
         from the preset key.
+    line_scale : float, optional
+        Multiplier on stroke widths and dashes only (:meth:`lw`). Defaults to
+        `scale`; :meth:`from_figsize` sets ``SLIDE_LINE_SCALE`` (2.5) for
+        slides, so lines on a slide are a little heavier than the text.
     title : str, optional
         Written to ``<title>``; for a reader of the file, not drawn.
     source : str, optional
@@ -286,6 +290,12 @@ class Scene:
     size_exponent : float, optional
         Size compression of the atom convention (``SIZE_EXPONENT``, 0.5):
         size differences are indicated, not to scale. 1.0 draws true radii.
+    atoms : dict of str to Atom, optional
+        Colours per element for this scene only, overriding
+        :data:`~phd_ui.colors.ATOMS` (fill, edge, light; the radius still
+        comes from the convention above). For a sketch where the default
+        colours do not suit one drawing:
+        ``atoms={"Zn": dataclasses.replace(ATOMS["Zn"], fill=..., edge=..., light=...)}``.
     """
 
     def __init__(
@@ -294,22 +304,26 @@ class Scene:
         height_mm: float,
         pm_per_mm: float = 65.0,
         scale: float = 1.0,
+        line_scale: float | None = None,
         title: str = "",
         source: str = "",
         ions: Iterable[str] = (),
         radii: dict[str, float] | None = None,
         size_exponent: float = SIZE_EXPONENT,
+        atoms: dict[str, Atom] | None = None,
     ) -> None:
         self.width_mm = width_mm
         self.height_mm = height_mm
         self.pm_per_mm = pm_per_mm
         self.scale = scale
+        self.line_scale = scale if line_scale is None else line_scale
         self.ions = tuple(ions)
         self.size_exponent = size_exponent
         self._true = {get_ion(k).symbol: get_ion(k).radius_pm for k in self.ions}
         if len(self._true) != len(self.ions):
             raise ValueError(f"Two ions of one element in {self.ions}: one radius per element per scene.")
         self.radii = dict(radii or {})
+        self.atoms = dict(atoms or {})
         self.width = width_mm * pm_per_mm
         self.height = height_mm * pm_per_mm
         self.root = ET.Element(_ns("svg"), {
@@ -364,10 +378,11 @@ class Scene:
             The scene, with ``scale`` set from the key (2 for slides).
         """
         from phd_ui.plotting.figsize import get_figsize
-        from phd_ui.plotting.params import scale_for_key
+        from phd_ui.plotting.params import line_scale_for_key, scale_for_key
 
         w_cm, h_cm = get_figsize(key, in_metric=True)
         kwargs.setdefault("scale", scale_for_key(key))
+        kwargs.setdefault("line_scale", line_scale_for_key(key))
         return cls(w_cm * 10, height_mm if height_mm is not None else h_cm * 10, **kwargs)  # type: ignore[arg-type]
 
     # -- units --------------------------------------------------------------
@@ -387,6 +402,22 @@ class Scene:
             The same size in pm.
         """
         return value * self.scale * MM_PER_PT * self.pm_per_mm
+
+    def lw(self, value: float) -> float:
+        """
+        Convert a line width (or dash length) in pt at print scale to user units (pm).
+
+        Parameters
+        ----------
+        value : float
+            Width in pt, at print scale; :attr:`line_scale` is applied here.
+
+        Returns
+        -------
+        float
+            The same width in pm.
+        """
+        return value * self.line_scale * MM_PER_PT * self.pm_per_mm
 
     def mm(self, value: float) -> float:
         """
@@ -562,30 +593,30 @@ class Scene:
     # -- output -------------------------------------------------------------
 
     def _css(self) -> str:
-        p = self.pt
+        p, w = self.pt, self.lw
         rules = [
             f"text{{font-family:{FONT_FAMILY};fill:{INK.base}}}",
             f".label{{font-size:{_num(p(_TEXT_PT['label']))}px}}",
             f".title{{font-size:{_num(p(_TEXT_PT['title']))}px;font-weight:600}}",
             f".note{{font-size:{_num(p(_TEXT_PT['note']))}px;fill:{GREY.dark}}}",
-            f".frame{{fill:none;stroke:{GREY.light};stroke-width:{_num(p(0.6))}}}",
-            f".leader{{fill:none;stroke:{INK.light};stroke-width:{_num(p(0.5))}}}",
-            f".site{{fill:none;stroke:{BLUE.line};stroke-width:{_num(p(1.0))}}}",
-            f".arrow{{fill:none;stroke:{INK.light};stroke-width:{_num(p(0.8))}}}",
+            f".frame{{fill:none;stroke:{GREY.light};stroke-width:{_num(w(0.6))}}}",
+            f".leader{{fill:none;stroke:{INK.light};stroke-width:{_num(w(0.5))}}}",
+            f".site{{fill:none;stroke:{BLUE.line};stroke-width:{_num(w(1.0))}}}",
+            f".arrow{{fill:none;stroke:{INK.light};stroke-width:{_num(w(0.8))}}}",
             f".arrowhead{{fill:{INK.light}}}",
-            f".angle{{fill:none;stroke:{INK.light};stroke-width:{_num(p(0.6))}}}",
+            f".angle{{fill:none;stroke:{INK.light};stroke-width:{_num(w(0.6))}}}",
         ]
-        dash = f"{_num(p(1.6))} {_num(p(1.0))}"
+        dash = f"{_num(w(1.6))} {_num(w(1.0))}"
         for (symbol, state), (ref, _) in sorted(self._atom_defs.items()):
-            atom = get_atom(symbol)
+            atom = self.atoms.get(symbol) or get_atom(symbol)
             if state == "plain":
-                rules.append(f".{ref}{{fill:{atom.fill};stroke:{atom.edge};stroke-width:{_num(p(0.6))}}}")
+                rules.append(f".{ref}{{fill:{atom.fill};stroke:{atom.edge};stroke-width:{_num(w(0.6))}}}")
             else:
-                rules.append(f".{ref}{{fill:{atom.light};stroke:{atom.edge};stroke-width:{_num(p(0.6))};"
+                rules.append(f".{ref}{{fill:{atom.light};stroke:{atom.edge};stroke-width:{_num(w(0.6))};"
                              f"stroke-dasharray:{dash}}}")
         for symbol in sorted(self._vacancy_symbols):
-            rules.append(f".vacancy-{symbol}{{fill:none;stroke:{get_atom(symbol).edge};"
-                         f"stroke-width:{_num(p(0.6))};stroke-dasharray:{dash}}}")
+            rules.append(f".vacancy-{symbol}{{fill:none;stroke:{(self.atoms.get(symbol) or get_atom(symbol)).edge};"
+                         f"stroke-width:{_num(w(0.6))};stroke-dasharray:{dash}}}")
         return "\n".join(rules)
 
     def to_string(self) -> str:
