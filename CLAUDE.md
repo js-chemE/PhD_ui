@@ -583,3 +583,7 @@ model3d.py   export_glb(view or molecule, path, look): real 3D glTF (.glb) for P
 | `figsize.json` | Figure size presets in cm |
 | `fonts/Source_Sans_3/` | Body/UI font |
 | `fonts/Source_Serif_4/` | Math text font |
+
+## Commit attribution
+
+No `Co-Authored-By: Claude` trailer, `Claude-Session` link or "Generated with Claude Code" line in commit messages or pull request descriptions. Julius credits AI use in acknowledgements and READMEs, not in the GitHub contributor list.
